@@ -44,7 +44,10 @@ export default defineConfig([
       },
     },
     rules: {
-      '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { varsIgnorePattern: '^[A-Z_]' },
+      ],
     },
   },
 ]);
