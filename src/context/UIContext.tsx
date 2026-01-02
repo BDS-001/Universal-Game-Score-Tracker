@@ -2,6 +2,7 @@ import { createContext, useContext, useState, ReactNode } from 'react';
 
 interface ModalState {
   newGame: boolean;
+  newPlayer: boolean;
   calculator: boolean;
   settings: boolean;
 }
@@ -21,6 +22,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 
   const [modals, setModals] = useState<ModalState>({
     newGame: false,
+    newPlayer: false,
     calculator: false,
     settings: false,
   });

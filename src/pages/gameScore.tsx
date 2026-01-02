@@ -18,7 +18,9 @@ export default function GameScore() {
       <h1>{gameName}</h1>
       <button>Settings</button>
       <button>Add Player</button>
-      {settings.winningPoints && <div>Winning Score: {settings.winningPoints}</div>}
+      {settings.winningPoints && (
+        <div>Winning Score: {settings.winningPoints}</div>
+      )}
       <div>
         <h2>Players</h2>
         {players.length === 0 ? (

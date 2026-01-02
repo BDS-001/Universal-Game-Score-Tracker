@@ -8,6 +8,7 @@ interface GameContextType {
   setCurrentGameId: (gameId: string | null) => void;
   addGame: (game: GameSave) => void;
   isGameNameTaken: (name: string) => boolean;
+  isPlayerNameTaken: (name: string, gameId: string) => boolean;
   testFunction: () => void;
 }
 
@@ -27,7 +28,17 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const isGameNameTaken = (name: string) => {
-    return Object.values(games).some(game => game.gameName.toLowerCase() === name.toLowerCase());
+    return Object.values(games).some(
+      (game) => game.gameName.toLowerCase() === name.toLowerCase()
+    );
+  };
+
+  const isPlayerNameTaken = (name: string, gameId: string) => {
+    const game = games[gameId];
+    if (!game) return false;
+    return game.players.some(
+      (player) => player.name.toLowerCase() === name.toLowerCase()
+    );
   };
 
   const testFunction = () => {
@@ -35,7 +46,17 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <GameContext.Provider value={{ games, currentGameId, setCurrentGameId, addGame, isGameNameTaken, testFunction }}>
+    <GameContext.Provider
+      value={{
+        games,
+        currentGameId,
+        setCurrentGameId,
+        addGame,
+        isGameNameTaken,
+        isPlayerNameTaken,
+        testFunction,
+      }}
+    >
       {children}
     </GameContext.Provider>
   );

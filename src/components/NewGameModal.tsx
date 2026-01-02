@@ -18,7 +18,8 @@ export default function NewGameModal() {
 
     const newGame = createNewGame(gameName.trim());
     newGame.settings.startingPoints = startingPoints;
-    newGame.settings.winningPoints = winningPoints === '' ? null : Number(winningPoints);
+    newGame.settings.winningPoints =
+      winningPoints === '' ? null : Number(winningPoints);
 
     addGame(newGame);
 
@@ -41,7 +42,9 @@ export default function NewGameModal() {
             onChange={(e) => setGameName(e.target.value)}
             autoFocus
           />
-          {nameTaken && <span style={{ color: 'red' }}>Name already taken</span>}
+          {nameTaken && (
+            <span style={{ color: 'red' }}>Name already taken</span>
+          )}
         </label>
         <label>
           Starting Points:
