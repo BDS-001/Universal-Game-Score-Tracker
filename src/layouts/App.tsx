@@ -1,5 +1,6 @@
 import { useUIContext } from '../context/UIContext';
 import GameSelector from '../pages/gameSelect';
+import GameScore from '../pages/gameScore';
 import NewGameModal from '../components/NewGameModal';
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
   return (
     <div>
       {currentScene === 'gameList' && <GameSelector />}
-      {currentScene === 'gamePage' && <div>Game Page (TODO)</div>}
+      {currentScene === 'gamePage' && <GameScore />}
       {modals.newGame && <NewGameModal />}
     </div>
   );
