@@ -7,6 +7,7 @@ interface GameContextType {
   currentGameId: string | null;
   setCurrentGameId: (gameId: string | null) => void;
   addGame: (game: GameSave) => void;
+  isGameNameTaken: (name: string) => boolean;
   testFunction: () => void;
 }
 
@@ -25,12 +26,16 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     StorageManager.saveData(updatedGames);
   };
 
+  const isGameNameTaken = (name: string) => {
+    return Object.values(games).some(game => game.gameName.toLowerCase() === name.toLowerCase());
+  };
+
   const testFunction = () => {
     console.log('Context is working!', games);
   };
 
   return (
-    <GameContext.Provider value={{ games, currentGameId, setCurrentGameId, addGame, testFunction }}>
+    <GameContext.Provider value={{ games, currentGameId, setCurrentGameId, addGame, isGameNameTaken, testFunction }}>
       {children}
     </GameContext.Provider>
   );

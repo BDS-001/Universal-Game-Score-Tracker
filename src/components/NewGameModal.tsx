@@ -5,14 +5,16 @@ import { createNewGame } from '../templates/gameTemplates';
 
 export default function NewGameModal() {
   const { closeModal } = useUIContext();
-  const { addGame } = useGameContext();
+  const { addGame, isGameNameTaken } = useGameContext();
   const [gameName, setGameName] = useState('');
   const [startingPoints, setStartingPoints] = useState(0);
   const [winningPoints, setWinningPoints] = useState('');
 
+  const nameTaken = gameName.trim() && isGameNameTaken(gameName.trim());
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!gameName.trim()) return;
+    if (!gameName.trim() || nameTaken) return;
 
     const newGame = createNewGame(gameName.trim());
     newGame.settings.startingPoints = startingPoints;
@@ -39,6 +41,7 @@ export default function NewGameModal() {
             onChange={(e) => setGameName(e.target.value)}
             autoFocus
           />
+          {nameTaken && <span style={{ color: 'red' }}>Name already taken</span>}
         </label>
         <label>
           Starting Points:
