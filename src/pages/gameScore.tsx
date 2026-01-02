@@ -3,7 +3,7 @@ import { useUIContext } from '../context/UIContext';
 
 export default function GameScore() {
   const { games, currentGameId } = useGameContext();
-  const { setCurrentScene } = useUIContext();
+  const { setCurrentScene, openModal } = useUIContext();
 
   if (!currentGameId || !games[currentGameId]) {
     return <div>No game selected</div>;
@@ -17,7 +17,7 @@ export default function GameScore() {
       <button onClick={() => setCurrentScene('gameList')}>Back to Games</button>
       <h1>{gameName}</h1>
       <button>Settings</button>
-      <button>Add Player</button>
+      <button onClick={() => openModal('newPlayer')}>Add Player</button>
       {settings.winningPoints && (
         <div>Winning Score: {settings.winningPoints}</div>
       )}
@@ -26,13 +26,13 @@ export default function GameScore() {
         {players.length === 0 ? (
           <p>No players yet</p>
         ) : (
-          <ul>
+          <div>
             {players.map((player) => (
-              <li key={player.id}>
+              <button key={player.id}>
                 {player.name} - {player.score}
-              </li>
+              </button>
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </>
