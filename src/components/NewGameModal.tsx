@@ -2,11 +2,10 @@ import { useState } from 'react';
 import { useUIContext } from '../context/UIContext';
 import { useGameContext } from '../context/GameContext';
 import { createNewGame } from '../templates/gameTemplates';
-import { StorageManager } from '../utils/storage';
 
 export default function NewGameModal() {
   const { closeModal } = useUIContext();
-  const { games } = useGameContext();
+  const { addGame } = useGameContext();
   const [gameName, setGameName] = useState('');
   const [startingPoints, setStartingPoints] = useState(0);
   const [winningPoints, setWinningPoints] = useState('');
@@ -19,8 +18,7 @@ export default function NewGameModal() {
     newGame.settings.startingPoints = startingPoints;
     newGame.settings.winningPoints = winningPoints === '' ? null : Number(winningPoints);
 
-    const updatedGames = { ...games, [newGame.id]: newGame };
-    StorageManager.saveData(updatedGames);
+    addGame(newGame);
 
     closeModal('newGame');
     setGameName('');
