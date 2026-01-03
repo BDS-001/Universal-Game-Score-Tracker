@@ -16,7 +16,7 @@ export default function GameSelector() {
       <div className={styles.title}>Games</div>
       <button
         className={styles.createButton}
-        onClick={() => openModal('newGame')}
+        onClick={() => openModal('gameSettings')}
       >
         Create New Game
       </button>

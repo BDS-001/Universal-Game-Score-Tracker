@@ -9,6 +9,14 @@ interface GameContextType {
   currentPlayerId: string | null;
   setCurrentPlayerId: (gameId: string | null) => void;
   addGame: (game: GameSave) => void;
+  updateGameSettings: (
+    gameId: string,
+    settings: {
+      gameName?: string;
+      startingPoints: number;
+      winningPoints: number | null;
+    }
+  ) => void;
   updatePlayerScore: (
     gameId: string,
     playerId: string,
@@ -47,6 +55,36 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     return Object.values(game.players).some(
       (player) => player.name.toLowerCase() === name.toLowerCase()
     );
+  };
+
+  const updateGameSettings = (
+    gameId: string,
+    settings: {
+      gameName?: string;
+      startingPoints: number;
+      winningPoints: number | null;
+    }
+  ) => {
+    const game = games[gameId];
+    if (!game) return;
+
+    const { gameName, startingPoints, winningPoints } = settings;
+
+    const updatedGames = {
+      ...games,
+      [gameId]: {
+        ...game,
+        ...(gameName && { gameName }),
+        settings: {
+          ...game.settings,
+          startingPoints,
+          winningPoints,
+        },
+      },
+    };
+
+    setGames(updatedGames);
+    StorageManager.saveData(updatedGames);
   };
 
   const updatePlayerScore = (
@@ -102,6 +140,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         currentPlayerId,
         setCurrentPlayerId,
         addGame,
+        updateGameSettings,
         updatePlayerScore,
         isGameNameTaken,
         isPlayerNameTaken,

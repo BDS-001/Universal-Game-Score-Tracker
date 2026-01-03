@@ -29,7 +29,12 @@ export default function GameScore() {
         </button>
         <h1 className={styles.title}>{gameName}</h1>
         <div className={styles.actions}>
-          <button className={styles.settingsButton}>Settings</button>
+          <button
+            className={styles.settingsButton}
+            onClick={() => openModal('gameSettings')}
+          >
+            Settings
+          </button>
           <button
             className={styles.addPlayerButton}
             onClick={() => openModal('newPlayer')}

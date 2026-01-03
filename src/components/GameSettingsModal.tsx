@@ -1,30 +1,57 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useUIContext } from '../context/UIContext';
 import { useGameContext } from '../context/GameContext';
 import { createNewGame } from '../templates/gameTemplates';
-import styles from './NewGameModal.module.css';
+import styles from './GameSettingsModal.module.css';
 
-export default function NewGameModal() {
+export default function GameSettingsModal() {
   const { closeModal } = useUIContext();
-  const { addGame, isGameNameTaken } = useGameContext();
+  const { games, currentGameId, addGame, updateGameSettings, isGameNameTaken } =
+    useGameContext();
+
+  const editingGame = currentGameId ? games[currentGameId] : null;
+  const isEditMode = !!editingGame;
+
   const [gameName, setGameName] = useState('');
   const [startingPoints, setStartingPoints] = useState(0);
   const [winningPoints, setWinningPoints] = useState('');
 
-  const nameTaken = gameName.trim() && isGameNameTaken(gameName.trim());
+  useEffect(() => {
+    if (editingGame) {
+      setGameName(editingGame.gameName);
+      setStartingPoints(editingGame.settings.startingPoints);
+      setWinningPoints(editingGame.settings.winningPoints?.toString() || '');
+    } else {
+      setGameName('');
+      setStartingPoints(0);
+      setWinningPoints('');
+    }
+  }, [editingGame]);
+
+  const nameTaken =
+    gameName.trim() &&
+    isGameNameTaken(gameName.trim()) &&
+    (!isEditMode || gameName.trim() !== editingGame?.gameName);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!gameName.trim() || nameTaken) return;
 
-    const newGame = createNewGame(gameName.trim());
-    newGame.settings.startingPoints = startingPoints;
-    newGame.settings.winningPoints =
-      winningPoints === '' ? null : Number(winningPoints);
+    if (isEditMode && currentGameId) {
+      updateGameSettings(currentGameId, {
+        gameName: gameName.trim(),
+        startingPoints,
+        winningPoints: winningPoints === '' ? null : Number(winningPoints),
+      });
+    } else {
+      const newGame = createNewGame(gameName.trim());
+      newGame.settings.startingPoints = startingPoints;
+      newGame.settings.winningPoints =
+        winningPoints === '' ? null : Number(winningPoints);
+      addGame(newGame);
+    }
 
-    addGame(newGame);
-
-    closeModal('newGame');
+    closeModal('gameSettings');
     setGameName('');
     setStartingPoints(0);
     setWinningPoints('');
@@ -33,10 +60,13 @@ export default function NewGameModal() {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <button className="modal-close" onClick={() => closeModal('newGame')}>
+        <button
+          className="modal-close"
+          onClick={() => closeModal('gameSettings')}
+        >
           X
         </button>
-        <h2>Create New Game</h2>
+        <h2>{isEditMode ? 'Edit Game Settings' : 'Create New Game'}</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
           <label className={styles.formLabel}>
             Game Name:
@@ -72,12 +102,12 @@ export default function NewGameModal() {
           </label>
           <div className={styles.buttons}>
             <button className={styles.submitButton} type="submit">
-              Create
+              {isEditMode ? 'Save' : 'Create'}
             </button>
             <button
               className={styles.cancelButton}
               type="button"
-              onClick={() => closeModal('newGame')}
+              onClick={() => closeModal('gameSettings')}
             >
               Cancel
             </button>

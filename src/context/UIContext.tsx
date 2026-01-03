@@ -1,10 +1,9 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
 
 interface ModalState {
-  newGame: boolean;
+  gameSettings: boolean;
   newPlayer: boolean;
   calculator: boolean;
-  settings: boolean;
   scoreHistory: boolean;
 }
 
@@ -22,10 +21,9 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   const [currentScene, setCurrentScene] = useState('gameList');
 
   const [modals, setModals] = useState<ModalState>({
-    newGame: false,
+    gameSettings: false,
     newPlayer: false,
     calculator: false,
-    settings: false,
     scoreHistory: false,
   });
 
