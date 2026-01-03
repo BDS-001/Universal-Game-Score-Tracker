@@ -28,5 +28,5 @@ export interface GameSave {
   gameName: string;
   dateCreated: string;
   settings: GameSettings;
-  players: Player[];
+  players: Record<string, Player>;
 }

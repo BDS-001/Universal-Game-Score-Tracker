@@ -36,7 +36,7 @@ export default function NewPlayerModal() {
 
     const updatedGame = {
       ...currentGame,
-      players: [...currentGame.players, newPlayer],
+      players: { ...currentGame.players, [newPlayer.id]: newPlayer },
     };
 
     addGame(updatedGame);

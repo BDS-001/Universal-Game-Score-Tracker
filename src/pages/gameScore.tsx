@@ -3,15 +3,20 @@ import { useUIContext } from '../context/UIContext';
 import styles from './gameScore.module.css';
 
 export default function GameScore() {
-  const { games, currentGameId } = useGameContext();
+  const { games, currentGameId, setCurrentPlayerId } = useGameContext();
   const { setCurrentScene, openModal } = useUIContext();
 
+  function goToPlayerScore(playerId: string) {
+    setCurrentPlayerId(playerId);
+    setCurrentScene('playerScore');
+  }
   if (!currentGameId || !games[currentGameId]) {
     return <div>No game selected</div>;
   }
 
   const game = games[currentGameId];
   const { gameName, settings, players } = game;
+  const playerArray = Object.values(players);
 
   return (
     <div className={styles.container}>
@@ -40,12 +45,16 @@ export default function GameScore() {
       </div>
       <div className={styles.playersSection}>
         <h2 className={styles.playersTitle}>Players</h2>
-        {players.length === 0 ? (
+        {playerArray.length === 0 ? (
           <p className={styles.noPlayers}>No players yet</p>
         ) : (
           <div className={styles.playerList}>
-            {players.map((player) => (
-              <button key={player.id} className={styles.playerButton}>
+            {playerArray.map((player) => (
+              <button
+                key={player.id}
+                className={styles.playerButton}
+                onClick={() => goToPlayerScore(player.id)}
+              >
                 <span>{player.name}</span>
                 <span>{player.score}</span>
               </button>

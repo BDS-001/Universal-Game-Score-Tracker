@@ -12,6 +12,6 @@ export const createNewGame = (gameName: string): GameSave => {
     gameName,
     dateCreated: new Date().toISOString(),
     settings: { ...defaultGameSettings },
-    players: [],
+    players: {},
   };
 };

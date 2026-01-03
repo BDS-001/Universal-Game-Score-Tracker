@@ -5,6 +5,7 @@ interface ModalState {
   newPlayer: boolean;
   calculator: boolean;
   settings: boolean;
+  scoreHistory: boolean;
 }
 
 interface UIContextType {
@@ -25,6 +26,7 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     newPlayer: false,
     calculator: false,
     settings: false,
+    scoreHistory: false,
   });
 
   const openModal = (modal: keyof ModalState) => {
