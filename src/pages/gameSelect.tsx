@@ -1,5 +1,6 @@
 import { useGameContext } from '../context/GameContext';
 import { useUIContext } from '../context/UIContext';
+import styles from './gameSelect.module.css';
 
 export default function GameSelector() {
   const { games, setCurrentGameId } = useGameContext();
@@ -11,14 +12,25 @@ export default function GameSelector() {
   };
 
   return (
-    <>
-      <div className="title">Games</div>
-      <button onClick={() => openModal('newGame')}>Create New Game</button>
-      {Object.entries(games).map(([key, game]) => (
-        <button key={key} onClick={() => handleGameClick(key)}>
-          {game.gameName}
-        </button>
-      ))}
-    </>
+    <div className={styles.container}>
+      <div className={styles.title}>Games</div>
+      <button
+        className={styles.createButton}
+        onClick={() => openModal('newGame')}
+      >
+        Create New Game
+      </button>
+      <div className={styles.gameList}>
+        {Object.entries(games).map(([key, game]) => (
+          <button
+            key={key}
+            className={styles.gameButton}
+            onClick={() => handleGameClick(key)}
+          >
+            {game.gameName}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }

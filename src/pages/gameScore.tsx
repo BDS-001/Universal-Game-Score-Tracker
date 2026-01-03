@@ -1,5 +1,6 @@
 import { useGameContext } from '../context/GameContext';
 import { useUIContext } from '../context/UIContext';
+import styles from './gameScore.module.css';
 
 export default function GameScore() {
   const { games, currentGameId } = useGameContext();
@@ -13,28 +14,45 @@ export default function GameScore() {
   const { gameName, settings, players } = game;
 
   return (
-    <>
-      <button onClick={() => setCurrentScene('gameList')}>Back to Games</button>
-      <h1>{gameName}</h1>
-      <button>Settings</button>
-      <button onClick={() => openModal('newPlayer')}>Add Player</button>
-      {settings.winningPoints && (
-        <div>Winning Score: {settings.winningPoints}</div>
-      )}
-      <div>
-        <h2>Players</h2>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <button
+          className={styles.backButton}
+          onClick={() => setCurrentScene('gameList')}
+        >
+          Back to Games
+        </button>
+        <h1 className={styles.title}>{gameName}</h1>
+        <div className={styles.actions}>
+          <button className={styles.settingsButton}>Settings</button>
+          <button
+            className={styles.addPlayerButton}
+            onClick={() => openModal('newPlayer')}
+          >
+            Add Player
+          </button>
+        </div>
+        {settings.winningPoints && (
+          <div className={styles.winningScore}>
+            Winning Score: {settings.winningPoints}
+          </div>
+        )}
+      </div>
+      <div className={styles.playersSection}>
+        <h2 className={styles.playersTitle}>Players</h2>
         {players.length === 0 ? (
-          <p>No players yet</p>
+          <p className={styles.noPlayers}>No players yet</p>
         ) : (
-          <div>
+          <div className={styles.playerList}>
             {players.map((player) => (
-              <button key={player.id}>
-                {player.name} - {player.score}
+              <button key={player.id} className={styles.playerButton}>
+                <span>{player.name}</span>
+                <span>{player.score}</span>
               </button>
             ))}
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }

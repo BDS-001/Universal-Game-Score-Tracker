@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useUIContext } from '../context/UIContext';
 import { useGameContext } from '../context/GameContext';
 import { Player } from '../types/game';
+import styles from './NewPlayerModal.module.css';
 
 export default function NewPlayerModal() {
   const { closeModal } = useUIContext();
@@ -45,27 +46,40 @@ export default function NewPlayerModal() {
   };
 
   return (
-    <div>
-      <button onClick={() => closeModal('newPlayer')}>X</button>
-      <h2>Add New Player</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Player Name:
-          <input
-            type="text"
-            value={playerName}
-            onChange={(e) => setPlayerName(e.target.value)}
-            autoFocus
-          />
-          {nameTaken && (
-            <span style={{ color: 'red' }}>Name already taken</span>
-          )}
-        </label>
-        <button type="submit">Add Player</button>
-        <button type="button" onClick={() => closeModal('newPlayer')}>
-          Cancel
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <button className="modal-close" onClick={() => closeModal('newPlayer')}>
+          X
         </button>
-      </form>
+        <h2>Add New Player</h2>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <label className={styles.formLabel}>
+            Player Name:
+            <input
+              className={styles.formInput}
+              type="text"
+              value={playerName}
+              onChange={(e) => setPlayerName(e.target.value)}
+              autoFocus
+            />
+            {nameTaken && (
+              <span className={styles.error}>Name already taken</span>
+            )}
+          </label>
+          <div className={styles.buttons}>
+            <button className={styles.submitButton} type="submit">
+              Add Player
+            </button>
+            <button
+              className={styles.cancelButton}
+              type="button"
+              onClick={() => closeModal('newPlayer')}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

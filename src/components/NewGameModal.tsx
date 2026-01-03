@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useUIContext } from '../context/UIContext';
 import { useGameContext } from '../context/GameContext';
 import { createNewGame } from '../templates/gameTemplates';
+import styles from './NewGameModal.module.css';
 
 export default function NewGameModal() {
   const { closeModal } = useUIContext();
@@ -30,44 +31,59 @@ export default function NewGameModal() {
   };
 
   return (
-    <div>
-      <button onClick={() => closeModal('newGame')}>X</button>
-      <h2>Create New Game</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Game Name:
-          <input
-            type="text"
-            value={gameName}
-            onChange={(e) => setGameName(e.target.value)}
-            autoFocus
-          />
-          {nameTaken && (
-            <span style={{ color: 'red' }}>Name already taken</span>
-          )}
-        </label>
-        <label>
-          Starting Points:
-          <input
-            type="number"
-            value={startingPoints}
-            onChange={(e) => setStartingPoints(Number(e.target.value))}
-          />
-        </label>
-        <label>
-          Winning Points (optional):
-          <input
-            type="number"
-            value={winningPoints}
-            onChange={(e) => setWinningPoints(e.target.value)}
-            placeholder="Leave empty for no win condition"
-          />
-        </label>
-        <button type="submit">Create</button>
-        <button type="button" onClick={() => closeModal('newGame')}>
-          Cancel
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <button className="modal-close" onClick={() => closeModal('newGame')}>
+          X
         </button>
-      </form>
+        <h2>Create New Game</h2>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <label className={styles.formLabel}>
+            Game Name:
+            <input
+              className={styles.formInput}
+              type="text"
+              value={gameName}
+              onChange={(e) => setGameName(e.target.value)}
+              autoFocus
+            />
+            {nameTaken && (
+              <span className={styles.error}>Name already taken</span>
+            )}
+          </label>
+          <label className={styles.formLabel}>
+            Starting Points:
+            <input
+              className={styles.formInput}
+              type="number"
+              value={startingPoints}
+              onChange={(e) => setStartingPoints(Number(e.target.value))}
+            />
+          </label>
+          <label className={styles.formLabel}>
+            Winning Points (optional):
+            <input
+              className={styles.formInput}
+              type="number"
+              value={winningPoints}
+              onChange={(e) => setWinningPoints(e.target.value)}
+              placeholder="Leave empty for no win condition"
+            />
+          </label>
+          <div className={styles.buttons}>
+            <button className={styles.submitButton} type="submit">
+              Create
+            </button>
+            <button
+              className={styles.cancelButton}
+              type="button"
+              onClick={() => closeModal('newGame')}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
