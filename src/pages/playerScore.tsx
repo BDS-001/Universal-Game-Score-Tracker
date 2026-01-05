@@ -35,17 +35,40 @@ export default function PlayerScore() {
   }
 
   const [newScore, setNewScore] = useState(player.score);
+  const [inputValue, setInputValue] = useState(player.score.toString());
   const difference = newScore - player.score;
   const pointsAway = settings.winningPoints
     ? settings.winningPoints - player.score
     : null;
 
   const handleIncrement = () => {
-    setNewScore(newScore + 1);
+    const newVal = newScore + 1;
+    setNewScore(newVal);
+    setInputValue(newVal.toString());
   };
 
   const handleDecrement = () => {
-    setNewScore(newScore - 1);
+    const newVal = newScore - 1;
+    setNewScore(newVal);
+    setInputValue(newVal.toString());
+  };
+
+  const handleScoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    if (value === '' || value === '-') {
+      setInputValue(value);
+      setNewScore(0);
+      return;
+    }
+
+    let cleaned = value.replace(/^0+(?=\d)/, '');
+
+    const parsed = parseInt(cleaned, 10);
+    if (!isNaN(parsed)) {
+      setInputValue(cleaned);
+      setNewScore(parsed);
+    }
   };
 
   const handleApply = () => {
@@ -82,7 +105,15 @@ export default function PlayerScore() {
             >
               -
             </button>
-            <div className={styles.newScore}>{newScore}</div>
+            <input
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              className={styles.newScore}
+              value={inputValue}
+              onChange={handleScoreChange}
+              onFocus={(e) => e.target.select()}
+            />
             <button
               className={styles.incrementButton}
               onClick={handleIncrement}
