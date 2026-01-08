@@ -6,8 +6,15 @@ import styles from './GameSettingsModal.module.css';
 
 export default function GameSettingsModal() {
   const { closeModal } = useUIContext();
-  const { games, currentGameId, addGame, updateGameSettings, isGameNameTaken } =
-    useGameContext();
+  const {
+    games,
+    currentGameId,
+    addGame,
+    updateGameSettings,
+    updatePlayerName,
+    isGameNameTaken,
+    isPlayerNameTaken,
+  } = useGameContext();
 
   const editingGame = currentGameId ? games[currentGameId] : null;
   const isEditMode = !!editingGame;
@@ -65,8 +72,9 @@ export default function GameSettingsModal() {
   };
 
   const handleSavePlayerName = (playerId: string) => {
-    if (!editingPlayerName.trim()) return;
-    // TODO: Implement rename player logic
+    if (!currentGameId || !editingPlayerName.trim()) return;
+
+    updatePlayerName(currentGameId, playerId, editingPlayerName.trim());
     setEditingPlayerId(null);
     setEditingPlayerName('');
   };
@@ -76,6 +84,12 @@ export default function GameSettingsModal() {
   };
 
   const playerArray = editingGame ? Object.values(editingGame.players) : [];
+
+  const isEditingPlayerNameTaken =
+    editingPlayerId &&
+    editingPlayerName.trim() &&
+    isPlayerNameTaken(editingPlayerName.trim(), currentGameId || '') &&
+    editingPlayerName.trim() !== editingGame?.players[editingPlayerId]?.name;
 
   return (
     <div className="modal-overlay">
@@ -128,17 +142,30 @@ export default function GameSettingsModal() {
                   <div key={player.id} className={styles.playerItem}>
                     {editingPlayerId === player.id ? (
                       <>
-                        <input
-                          className={styles.playerInput}
-                          type="text"
-                          value={editingPlayerName}
-                          onChange={(e) => setEditingPlayerName(e.target.value)}
-                          autoFocus
-                        />
+                        <div className={styles.playerInputWrapper}>
+                          <input
+                            className={styles.playerInput}
+                            type="text"
+                            value={editingPlayerName}
+                            onChange={(e) =>
+                              setEditingPlayerName(e.target.value)
+                            }
+                            autoFocus
+                          />
+                          {isEditingPlayerNameTaken && (
+                            <span className={styles.error}>
+                              Name already taken
+                            </span>
+                          )}
+                        </div>
                         <button
                           className={styles.saveButton}
                           type="button"
                           onClick={() => handleSavePlayerName(player.id)}
+                          disabled={
+                            !editingPlayerName.trim() ||
+                            isEditingPlayerNameTaken
+                          }
                         >
                           Save
                         </button>

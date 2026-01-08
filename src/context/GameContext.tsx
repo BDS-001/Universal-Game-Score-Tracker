@@ -22,6 +22,7 @@ interface GameContextType {
     playerId: string,
     newScore: number
   ) => void;
+  updatePlayerName: (gameId: string, playerId: string, newName: string) => void;
   isGameNameTaken: (name: string) => boolean;
   isPlayerNameTaken: (name: string, gameId: string) => boolean;
   testFunction: () => void;
@@ -127,6 +128,35 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     StorageManager.saveData(updatedGames);
   };
 
+  const updatePlayerName = (
+    gameId: string,
+    playerId: string,
+    newName: string
+  ) => {
+    const game = games[gameId];
+    if (!game) return;
+
+    const player = game.players[playerId];
+    if (!player) return;
+
+    const updatedGames = {
+      ...games,
+      [gameId]: {
+        ...game,
+        players: {
+          ...game.players,
+          [playerId]: {
+            ...player,
+            name: newName,
+          },
+        },
+      },
+    };
+
+    setGames(updatedGames);
+    StorageManager.saveData(updatedGames);
+  };
+
   const testFunction = () => {
     console.log('Context is working!', games);
   };
@@ -142,6 +172,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         addGame,
         updateGameSettings,
         updatePlayerScore,
+        updatePlayerName,
         isGameNameTaken,
         isPlayerNameTaken,
         testFunction,
