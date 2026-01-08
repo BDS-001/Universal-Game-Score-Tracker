@@ -24,6 +24,7 @@ interface GameContextType {
   ) => void;
   updatePlayerName: (gameId: string, playerId: string, newName: string) => void;
   deletePlayer: (gameId: string, playerId: string) => void;
+  deleteGame: (gameId: string) => void;
   isGameNameTaken: (name: string) => boolean;
   isPlayerNameTaken: (name: string, gameId: string) => boolean;
 }
@@ -154,6 +155,16 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  const deleteGame = (gameId: string) => {
+    const { [gameId]: _, ...remainingGames } = games;
+    setGames(remainingGames);
+    StorageManager.saveData(remainingGames);
+
+    if (currentGameId === gameId) {
+      setCurrentGameId(null);
+    }
+  };
+
   return (
     <GameContext.Provider
       value={{
@@ -167,6 +178,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         updatePlayerScore,
         updatePlayerName,
         deletePlayer,
+        deleteGame,
         isGameNameTaken,
         isPlayerNameTaken,
       }}

@@ -41,14 +41,6 @@ export default function GameScore() {
           >
             Add Player
           </button>
-          <button
-            className={styles.deleteButton}
-            onClick={() => {
-              // TODO: Implement delete game logic
-            }}
-          >
-            Delete Game
-          </button>
         </div>
         {settings.winningPoints && (
           <div className={styles.winningScore}>
