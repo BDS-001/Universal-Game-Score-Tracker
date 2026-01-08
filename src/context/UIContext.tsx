@@ -5,6 +5,15 @@ interface ModalState {
   newPlayer: boolean;
   calculator: boolean;
   scoreHistory: boolean;
+  confirmation: boolean;
+}
+
+export interface ConfirmationData {
+  title: string;
+  message: string;
+  onConfirm: () => void;
+  confirmText?: string;
+  cancelText?: string;
 }
 
 interface UIContextType {
@@ -13,6 +22,8 @@ interface UIContextType {
   modals: ModalState;
   openModal: (modal: keyof ModalState) => void;
   closeModal: (modal: keyof ModalState) => void;
+  confirmationData: ConfirmationData | null;
+  showConfirmation: (data: ConfirmationData) => void;
 }
 
 const UIContext = createContext<UIContextType | undefined>(undefined);
@@ -25,7 +36,11 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     newPlayer: false,
     calculator: false,
     scoreHistory: false,
+    confirmation: false,
   });
+
+  const [confirmationData, setConfirmationData] =
+    useState<ConfirmationData | null>(null);
 
   const openModal = (modal: keyof ModalState) => {
     setModals((prev) => ({ ...prev, [modal]: true }));
@@ -33,6 +48,14 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
 
   const closeModal = (modal: keyof ModalState) => {
     setModals((prev) => ({ ...prev, [modal]: false }));
+    if (modal === 'confirmation') {
+      setConfirmationData(null);
+    }
+  };
+
+  const showConfirmation = (data: ConfirmationData) => {
+    setConfirmationData(data);
+    openModal('confirmation');
   };
 
   return (
@@ -43,6 +66,8 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
         modals,
         openModal,
         closeModal,
+        confirmationData,
+        showConfirmation,
       }}
     >
       {children}

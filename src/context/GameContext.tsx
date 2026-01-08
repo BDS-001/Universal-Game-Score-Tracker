@@ -23,9 +23,9 @@ interface GameContextType {
     newScore: number
   ) => void;
   updatePlayerName: (gameId: string, playerId: string, newName: string) => void;
+  deletePlayer: (gameId: string, playerId: string) => void;
   isGameNameTaken: (name: string) => boolean;
   isPlayerNameTaken: (name: string, gameId: string) => boolean;
-  testFunction: () => void;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -37,6 +37,18 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
 
   const [currentGameId, setCurrentGameId] = useState<string | null>(null);
   const [currentPlayerId, setCurrentPlayerId] = useState<string | null>(null);
+
+  const updateGame = (
+    gameId: string,
+    updater: (game: GameSave) => GameSave
+  ) => {
+    const game = games[gameId];
+    if (!game) return;
+
+    const updatedGames = { ...games, [gameId]: updater(game) };
+    setGames(updatedGames);
+    StorageManager.saveData(updatedGames);
+  };
 
   const addGame = (game: GameSave) => {
     const updatedGames = { ...games, [game.id]: game };
@@ -66,26 +78,17 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       winningPoints: number | null;
     }
   ) => {
-    const game = games[gameId];
-    if (!game) return;
-
     const { gameName, startingPoints, winningPoints } = settings;
 
-    const updatedGames = {
-      ...games,
-      [gameId]: {
-        ...game,
-        ...(gameName && { gameName }),
-        settings: {
-          ...game.settings,
-          startingPoints,
-          winningPoints,
-        },
+    updateGame(gameId, (game) => ({
+      ...game,
+      ...(gameName && { gameName }),
+      settings: {
+        ...game.settings,
+        startingPoints,
+        winningPoints,
       },
-    };
-
-    setGames(updatedGames);
-    StorageManager.saveData(updatedGames);
+    }));
   };
 
   const updatePlayerScore = (
@@ -93,39 +96,30 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     playerId: string,
     newScore: number
   ) => {
-    const game = games[gameId];
-    if (!game) return;
+    updateGame(gameId, (game) => {
+      const player = game.players[playerId];
+      if (!player) return game;
 
-    const player = game.players[playerId];
-    if (!player) return;
-
-    const change = newScore - player.score;
-    const updatedPlayer = {
-      ...player,
-      score: newScore,
-      scoreHistory: [
-        ...player.scoreHistory,
-        {
-          change,
-          timestamp: new Date().toISOString(),
-          newTotal: newScore,
-        },
-      ],
-    };
-
-    const updatedGames = {
-      ...games,
-      [gameId]: {
+      const change = newScore - player.score;
+      return {
         ...game,
         players: {
           ...game.players,
-          [playerId]: updatedPlayer,
+          [playerId]: {
+            ...player,
+            score: newScore,
+            scoreHistory: [
+              ...player.scoreHistory,
+              {
+                change,
+                timestamp: new Date().toISOString(),
+                newTotal: newScore,
+              },
+            ],
+          },
         },
-      },
-    };
-
-    setGames(updatedGames);
-    StorageManager.saveData(updatedGames);
+      };
+    });
   };
 
   const updatePlayerName = (
@@ -133,15 +127,11 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     playerId: string,
     newName: string
   ) => {
-    const game = games[gameId];
-    if (!game) return;
+    updateGame(gameId, (game) => {
+      const player = game.players[playerId];
+      if (!player) return game;
 
-    const player = game.players[playerId];
-    if (!player) return;
-
-    const updatedGames = {
-      ...games,
-      [gameId]: {
+      return {
         ...game,
         players: {
           ...game.players,
@@ -150,15 +140,18 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
             name: newName,
           },
         },
-      },
-    };
-
-    setGames(updatedGames);
-    StorageManager.saveData(updatedGames);
+      };
+    });
   };
 
-  const testFunction = () => {
-    console.log('Context is working!', games);
+  const deletePlayer = (gameId: string, playerId: string) => {
+    updateGame(gameId, (game) => {
+      const { [playerId]: _, ...remainingPlayers } = game.players;
+      return {
+        ...game,
+        players: remainingPlayers,
+      };
+    });
   };
 
   return (
@@ -173,9 +166,9 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
         updateGameSettings,
         updatePlayerScore,
         updatePlayerName,
+        deletePlayer,
         isGameNameTaken,
         isPlayerNameTaken,
-        testFunction,
       }}
     >
       {children}

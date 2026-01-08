@@ -5,6 +5,7 @@ import PlayerScore from '../pages/playerScore';
 import GameSettingsModal from '../components/GameSettingsModal';
 import NewPlayerModal from '../components/NewPlayerModal';
 import ScoreHistoryModal from '../components/ScoreHistoryModal';
+import ConfirmationModal from '../components/ConfirmationModal';
 
 function App() {
   const { currentScene, modals } = useUIContext();
@@ -17,6 +18,7 @@ function App() {
       {modals.gameSettings && <GameSettingsModal />}
       {modals.newPlayer && <NewPlayerModal />}
       {modals.scoreHistory && <ScoreHistoryModal />}
+      {modals.confirmation && <ConfirmationModal />}
     </div>
   );
 }

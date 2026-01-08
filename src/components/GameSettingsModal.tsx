@@ -1,17 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useUIContext } from '../context/UIContext';
 import { useGameContext } from '../context/GameContext';
 import { createNewGame } from '../templates/gameTemplates';
 import styles from './GameSettingsModal.module.css';
 
 export default function GameSettingsModal() {
-  const { closeModal } = useUIContext();
+  const { closeModal, showConfirmation } = useUIContext();
   const {
     games,
     currentGameId,
     addGame,
     updateGameSettings,
     updatePlayerName,
+    deletePlayer,
     isGameNameTaken,
     isPlayerNameTaken,
   } = useGameContext();
@@ -25,35 +26,41 @@ export default function GameSettingsModal() {
   const [editingPlayerId, setEditingPlayerId] = useState<string | null>(null);
   const [editingPlayerName, setEditingPlayerName] = useState('');
 
+  const trimmedGameName = useMemo(() => gameName.trim(), [gameName]);
+
+  const resetForm = useCallback(() => {
+    setGameName('');
+    setStartingPoints(0);
+    setWinningPoints('');
+  }, []);
+
   useEffect(() => {
     if (editingGame) {
       setGameName(editingGame.gameName);
       setStartingPoints(editingGame.settings.startingPoints);
       setWinningPoints(editingGame.settings.winningPoints?.toString() || '');
     } else {
-      setGameName('');
-      setStartingPoints(0);
-      setWinningPoints('');
+      resetForm();
     }
-  }, [editingGame]);
+  }, [editingGame, resetForm]);
 
   const nameTaken =
-    gameName.trim() &&
-    isGameNameTaken(gameName.trim()) &&
-    (!isEditMode || gameName.trim() !== editingGame?.gameName);
+    trimmedGameName &&
+    isGameNameTaken(trimmedGameName) &&
+    (!isEditMode || trimmedGameName !== editingGame?.gameName);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!gameName.trim() || nameTaken) return;
+    if (!trimmedGameName || nameTaken) return;
 
     if (isEditMode && currentGameId) {
       updateGameSettings(currentGameId, {
-        gameName: gameName.trim(),
+        gameName: trimmedGameName,
         startingPoints,
         winningPoints: winningPoints === '' ? null : Number(winningPoints),
       });
     } else {
-      const newGame = createNewGame(gameName.trim());
+      const newGame = createNewGame(trimmedGameName);
       newGame.settings.startingPoints = startingPoints;
       newGame.settings.winningPoints =
         winningPoints === '' ? null : Number(winningPoints);
@@ -61,9 +68,7 @@ export default function GameSettingsModal() {
     }
 
     closeModal('gameSettings');
-    setGameName('');
-    setStartingPoints(0);
-    setWinningPoints('');
+    resetForm();
   };
 
   const handleEditPlayerName = (playerId: string, currentName: string) => {
@@ -72,7 +77,7 @@ export default function GameSettingsModal() {
   };
 
   const handleSavePlayerName = (playerId: string) => {
-    if (!currentGameId || !editingPlayerName.trim()) return;
+    if (!currentGameId) return;
 
     updatePlayerName(currentGameId, playerId, editingPlayerName.trim());
     setEditingPlayerId(null);
@@ -80,14 +85,25 @@ export default function GameSettingsModal() {
   };
 
   const handleDeletePlayer = (playerId: string) => {
-    // TODO: Implement delete player logic
+    const player = editingGame?.players[playerId];
+    if (!player || !currentGameId) return;
+
+    showConfirmation({
+      title: 'Delete Player',
+      message: `Are you sure you want to delete "${player.name}"? This action cannot be undone.`,
+      confirmText: 'Delete',
+      cancelText: 'Cancel',
+      onConfirm: () => {
+        deletePlayer(currentGameId, playerId);
+      },
+    });
   };
 
   const playerArray = editingGame ? Object.values(editingGame.players) : [];
 
   const isEditingPlayerNameTaken =
-    editingPlayerId &&
-    editingPlayerName.trim() &&
+    !!editingPlayerId &&
+    !!editingPlayerName.trim() &&
     isPlayerNameTaken(editingPlayerName.trim(), currentGameId || '') &&
     editingPlayerName.trim() !== editingGame?.players[editingPlayerId]?.name;
 
