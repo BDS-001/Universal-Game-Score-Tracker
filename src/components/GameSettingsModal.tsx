@@ -157,7 +157,9 @@ export default function GameSettingsModal() {
                           <button
                             className={styles.renameButton}
                             type="button"
-                            onClick={() => handleEditPlayerName(player.id, player.name)}
+                            onClick={() =>
+                              handleEditPlayerName(player.id, player.name)
+                            }
                           >
                             Rename
                           </button>
