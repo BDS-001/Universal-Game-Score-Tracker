@@ -15,6 +15,8 @@ export default function GameSettingsModal() {
   const [gameName, setGameName] = useState('');
   const [startingPoints, setStartingPoints] = useState(0);
   const [winningPoints, setWinningPoints] = useState('');
+  const [editingPlayerId, setEditingPlayerId] = useState<string | null>(null);
+  const [editingPlayerName, setEditingPlayerName] = useState('');
 
   useEffect(() => {
     if (editingGame) {
@@ -56,6 +58,24 @@ export default function GameSettingsModal() {
     setStartingPoints(0);
     setWinningPoints('');
   };
+
+  const handleEditPlayerName = (playerId: string, currentName: string) => {
+    setEditingPlayerId(playerId);
+    setEditingPlayerName(currentName);
+  };
+
+  const handleSavePlayerName = (playerId: string) => {
+    if (!editingPlayerName.trim()) return;
+    // TODO: Implement rename player logic
+    setEditingPlayerId(null);
+    setEditingPlayerName('');
+  };
+
+  const handleDeletePlayer = (playerId: string) => {
+    // TODO: Implement delete player logic
+  };
+
+  const playerArray = editingGame ? Object.values(editingGame.players) : [];
 
   return (
     <div className="modal-overlay">
@@ -100,6 +120,62 @@ export default function GameSettingsModal() {
               placeholder="Leave empty for no win condition"
             />
           </label>
+          {isEditMode && playerArray.length > 0 && (
+            <div className={styles.playersSection}>
+              <h3 className={styles.sectionTitle}>Players</h3>
+              <div className={styles.playerList}>
+                {playerArray.map((player) => (
+                  <div key={player.id} className={styles.playerItem}>
+                    {editingPlayerId === player.id ? (
+                      <>
+                        <input
+                          className={styles.playerInput}
+                          type="text"
+                          value={editingPlayerName}
+                          onChange={(e) => setEditingPlayerName(e.target.value)}
+                          autoFocus
+                        />
+                        <button
+                          className={styles.saveButton}
+                          type="button"
+                          onClick={() => handleSavePlayerName(player.id)}
+                        >
+                          Save
+                        </button>
+                        <button
+                          className={styles.cancelEditButton}
+                          type="button"
+                          onClick={() => setEditingPlayerId(null)}
+                        >
+                          Cancel
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <span className={styles.playerName}>{player.name}</span>
+                        <div className={styles.playerActions}>
+                          <button
+                            className={styles.renameButton}
+                            type="button"
+                            onClick={() => handleEditPlayerName(player.id, player.name)}
+                          >
+                            Rename
+                          </button>
+                          <button
+                            className={styles.deletePlayerButton}
+                            type="button"
+                            onClick={() => handleDeletePlayer(player.id)}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
           <div className={styles.buttons}>
             <button className={styles.submitButton} type="submit">
               {isEditMode ? 'Save' : 'Create'}
