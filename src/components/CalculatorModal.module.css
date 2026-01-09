@@ -1,0 +1,201 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.closeButton {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.closeButton:hover {
+  color: #000;
+}
+
+.title {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.display {
+  background: #f5f5f5;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  text-align: right;
+  min-height: 3rem;
+  word-break: break-all;
+  font-family: monospace;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.result {
+  color: #28a745;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-align: right;
+  font-family: monospace;
+  min-height: 1.75rem;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.currentScoreButton {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  background: #17a2b8;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.currentScoreButton:hover {
+  background: #138496;
+}
+
+.buttonGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.numberButton,
+.operatorButton,
+.clearButton,
+.backspaceButton,
+.equalsButton {
+  padding: 1rem;
+  font-size: 1.25rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-weight: 500;
+}
+
+.numberButton {
+  background: #e9ecef;
+  color: #333;
+}
+
+.numberButton:hover {
+  background: #dee2e6;
+}
+
+.numberButton:active {
+  background: #ced4da;
+}
+
+.operatorButton {
+  background: #007bff;
+  color: white;
+}
+
+.operatorButton:hover {
+  background: #0056b3;
+}
+
+.operatorButton:active {
+  background: #004085;
+}
+
+.clearButton {
+  background: #dc3545;
+  color: white;
+}
+
+.clearButton:hover {
+  background: #c82333;
+}
+
+.clearButton:active {
+  background: #bd2130;
+}
+
+.backspaceButton {
+  background: #ffc107;
+  color: #333;
+}
+
+.backspaceButton:hover {
+  background: #e0a800;
+}
+
+.backspaceButton:active {
+  background: #d39e00;
+}
+
+.equalsButton {
+  background: #28a745;
+  color: white;
+  grid-column: span 2;
+  font-size: 1.5rem;
+}
+
+.equalsButton:hover {
+  background: #218838;
+}
+
+.equalsButton:active {
+  background: #1e7e34;
+}
+
+.applyButton {
+  background: #007bff;
+  color: white;
+  grid-column: span 2;
+  font-size: 1.5rem;
+}
+
+.applyButton:hover:not(:disabled) {
+  background: #0056b3;
+}
+
+.applyButton:active:not(:disabled) {
+  background: #004085;
+}
+
+.applyButton:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.zeroButton {
+  grid-column: span 2;
+}

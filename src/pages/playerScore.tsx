@@ -11,7 +11,7 @@ export default function PlayerScore() {
     currentGameId,
     updatePlayerScore,
   } = useGameContext();
-  const { setCurrentScene, openModal } = useUIContext();
+  const { setCurrentScene, openModal, openCalculator } = useUIContext();
 
   function returnToScorePage() {
     setCurrentPlayerId(null);
@@ -75,6 +75,12 @@ export default function PlayerScore() {
     updatePlayerScore(currentGameId, currentPlayerId, newScore);
   };
 
+  const handleCalculatorResult = (result: number) => {
+    const rounded = Math.round(result);
+    setNewScore(rounded);
+    setInputValue(rounded.toString());
+  };
+
   return (
     <>
       <div className={styles.container}>
@@ -121,6 +127,13 @@ export default function PlayerScore() {
               +
             </button>
           </div>
+
+          <button
+            className={styles.calculatorButton}
+            onClick={() => openCalculator(handleCalculatorResult, player.score)}
+          >
+            Calculator
+          </button>
 
           <div className={styles.difference}>
             <span className={styles.label}>Difference:</span>

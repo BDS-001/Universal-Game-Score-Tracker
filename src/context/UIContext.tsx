@@ -24,6 +24,12 @@ interface UIContextType {
   closeModal: (modal: keyof ModalState) => void;
   confirmationData: ConfirmationData | null;
   showConfirmation: (data: ConfirmationData) => void;
+  calculatorCallback: ((result: number) => void) | null;
+  calculatorCurrentScore: number | undefined;
+  openCalculator: (
+    callback: (result: number) => void,
+    currentScore?: number
+  ) => void;
 }
 
 const UIContext = createContext<UIContextType | undefined>(undefined);
@@ -42,6 +48,14 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
   const [confirmationData, setConfirmationData] =
     useState<ConfirmationData | null>(null);
 
+  const [calculatorCallback, setCalculatorCallback] = useState<
+    ((result: number) => void) | null
+  >(null);
+
+  const [calculatorCurrentScore, setCalculatorCurrentScore] = useState<
+    number | undefined
+  >(undefined);
+
   const openModal = (modal: keyof ModalState) => {
     setModals((prev) => ({ ...prev, [modal]: true }));
   };
@@ -51,11 +65,24 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
     if (modal === 'confirmation') {
       setConfirmationData(null);
     }
+    if (modal === 'calculator') {
+      setCalculatorCallback(null);
+      setCalculatorCurrentScore(undefined);
+    }
   };
 
   const showConfirmation = (data: ConfirmationData) => {
     setConfirmationData(data);
     openModal('confirmation');
+  };
+
+  const openCalculator = (
+    callback: (result: number) => void,
+    currentScore?: number
+  ) => {
+    setCalculatorCallback(() => callback);
+    setCalculatorCurrentScore(currentScore);
+    openModal('calculator');
   };
 
   return (
@@ -68,6 +95,9 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
         closeModal,
         confirmationData,
         showConfirmation,
+        calculatorCallback,
+        calculatorCurrentScore,
+        openCalculator,
       }}
     >
       {children}

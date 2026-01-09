@@ -6,9 +6,11 @@ import GameSettingsModal from '../components/GameSettingsModal';
 import NewPlayerModal from '../components/NewPlayerModal';
 import ScoreHistoryModal from '../components/ScoreHistoryModal';
 import ConfirmationModal from '../components/ConfirmationModal';
+import CalculatorModal from '../components/CalculatorModal';
 
 function App() {
-  const { currentScene, modals } = useUIContext();
+  const { currentScene, modals, calculatorCallback, calculatorCurrentScore } =
+    useUIContext();
 
   return (
     <div>
@@ -18,6 +20,12 @@ function App() {
       {modals.gameSettings && <GameSettingsModal />}
       {modals.newPlayer && <NewPlayerModal />}
       {modals.scoreHistory && <ScoreHistoryModal />}
+      {modals.calculator && (
+        <CalculatorModal
+          onCalculate={calculatorCallback || undefined}
+          currentScore={calculatorCurrentScore}
+        />
+      )}
       {modals.confirmation && <ConfirmationModal />}
     </div>
   );
