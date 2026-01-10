@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useUIContext } from '../context/UIContext';
 import { useGameContext } from '../context/GameContext';
 import { createNewGame } from '../templates/gameTemplates';
+import styles from './GameSettingsModal.module.css';
 
 export default function GameSettingsModal() {
   const { closeModal, showConfirmation } = useUIContext();
@@ -150,37 +151,14 @@ export default function GameSettingsModal() {
             />
           </label>
           {isEditMode && playerArray.length > 0 && (
-            <div style={{ marginTop: '1.5rem' }}>
+            <div className={styles.playersSection}>
               <h3>Players</h3>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.5rem',
-                }}
-              >
+              <div className={styles.playerList}>
                 {playerArray.map((player) => (
-                  <div
-                    key={player.id}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      padding: '0.75rem',
-                      border: '1px solid #ddd',
-                      background: '#f9f9f9',
-                    }}
-                  >
+                  <div key={player.id} className={styles.playerItem}>
                     {editingPlayerId === player.id ? (
                       <>
-                        <div
-                          style={{
-                            flex: 1,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '0.25rem',
-                          }}
-                        >
+                        <div className={styles.playerInputWrapper}>
                           <input
                             className="form-input"
                             type="text"
@@ -217,7 +195,7 @@ export default function GameSettingsModal() {
                       </>
                     ) : (
                       <>
-                        <span style={{ flex: 1 }}>{player.name}</span>
+                        <span className={styles.playerName}>{player.name}</span>
                         <button
                           className="btn btn-primary"
                           type="button"

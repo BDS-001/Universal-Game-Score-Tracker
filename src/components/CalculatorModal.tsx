@@ -122,10 +122,9 @@ export default function CalculatorModal({
 
         {currentScore !== undefined && (
           <button
-            className="btn btn-info"
+            className={`btn btn-info ${styles.currentScoreBtn}`}
             onClick={handleAddCurrentScore}
             type="button"
-            style={{ width: '100%', marginBottom: '0.5rem' }}
           >
             Current Score ({currentScore})
           </button>

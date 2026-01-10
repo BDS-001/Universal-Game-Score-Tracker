@@ -1,4 +1,5 @@
 import { useUIContext } from '../context/UIContext';
+import styles from './ConfirmationModal.module.css';
 
 export default function ConfirmationModal() {
   const { closeModal, confirmationData } = useUIContext();
@@ -15,13 +16,11 @@ export default function ConfirmationModal() {
   };
 
   return (
-    <div className="modal-overlay" style={{ zIndex: 2000 }}>
-      <div className="modal-content" style={{ maxWidth: '400px' }}>
+    <div className={`modal-overlay ${styles.overlay}`}>
+      <div className={`modal-content ${styles.content}`}>
         <h2>{confirmationData.title}</h2>
-        <p style={{ color: '#666', lineHeight: 1.5 }}>
-          {confirmationData.message}
-        </p>
-        <div className="form-buttons" style={{ justifyContent: 'flex-end' }}>
+        <p className={styles.message}>{confirmationData.message}</p>
+        <div className={`form-buttons ${styles.buttons}`}>
           <button className="btn" onClick={handleCancel}>
             {confirmationData.cancelText || 'Cancel'}
           </button>

@@ -19,6 +19,11 @@
   visibility: hidden;
 }
 
+.currentScoreBtn {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
 .buttonGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

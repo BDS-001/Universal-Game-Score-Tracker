@@ -1,0 +1,55 @@
+.historyList {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 1rem;
+}
+
+.noHistory {
+  color: #666;
+  font-style: italic;
+  text-align: center;
+  padding: 2rem;
+}
+
+.historyItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.historyItem:last-child {
+  border-bottom: none;
+}
+
+.timestamp {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.scoreChange {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: bold;
+}
+
+.positive {
+  color: #28a745;
+}
+
+.negative {
+  color: #dc3545;
+}
+
+.arrow {
+  color: #666;
+  font-weight: normal;
+}
+
+.newTotal {
+  color: #333;
+  min-width: 60px;
+  text-align: right;
+}

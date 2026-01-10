@@ -1,5 +1,6 @@
 import { useUIContext } from '../context/UIContext';
 import { useGameContext } from '../context/GameContext';
+import styles from './ScoreHistoryModal.module.css';
 
 export default function ScoreHistoryModal() {
   const { closeModal } = useUIContext();
@@ -30,60 +31,26 @@ export default function ScoreHistoryModal() {
           ×
         </button>
         <h2>Score History - {player.name}</h2>
-        <div
-          style={{ maxHeight: '400px', overflowY: 'auto', marginTop: '1rem' }}
-        >
+        <div className={styles.historyList}>
           {history.length === 0 ? (
-            <p
-              style={{
-                color: '#666',
-                fontStyle: 'italic',
-                textAlign: 'center',
-                padding: '2rem',
-              }}
-            >
-              No score history yet
-            </p>
+            <p className={styles.noHistory}>No score history yet</p>
           ) : (
             history.map((entry, index) => (
-              <div
-                key={index}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '1rem',
-                  borderBottom:
-                    index === history.length - 1 ? 'none' : '1px solid #e0e0e0',
-                }}
-              >
-                <div style={{ fontSize: '0.875rem', color: '#666' }}>
+              <div key={index} className={styles.historyItem}>
+                <div className={styles.timestamp}>
                   {formatDate(entry.timestamp)}
                 </div>
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    fontWeight: 'bold',
-                  }}
-                >
+                <div className={styles.scoreChange}>
                   <span
-                    style={{ color: entry.change >= 0 ? '#28a745' : '#dc3545' }}
+                    className={
+                      entry.change >= 0 ? styles.positive : styles.negative
+                    }
                   >
                     {entry.change >= 0 ? '+' : ''}
                     {entry.change}
                   </span>
-                  <span style={{ color: '#666', fontWeight: 'normal' }}>→</span>
-                  <span
-                    style={{
-                      color: '#333',
-                      minWidth: '60px',
-                      textAlign: 'right',
-                    }}
-                  >
-                    {entry.newTotal}
-                  </span>
+                  <span className={styles.arrow}>→</span>
+                  <span className={styles.newTotal}>{entry.newTotal}</span>
                 </div>
               </div>
             ))
