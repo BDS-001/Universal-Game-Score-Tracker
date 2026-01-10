@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useUIContext } from '../context/UIContext';
 import { useGameContext } from '../context/GameContext';
 import { createNewGame } from '../templates/gameTemplates';
-import styles from './GameSettingsModal.module.css';
 
 export default function GameSettingsModal() {
   const { closeModal, showConfirmation } = useUIContext();
@@ -114,36 +113,36 @@ export default function GameSettingsModal() {
           className="modal-close"
           onClick={() => closeModal('gameSettings')}
         >
-          X
+          ×
         </button>
         <h2>{isEditMode ? 'Edit Game Settings' : 'Create New Game'}</h2>
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <label className={styles.formLabel}>
+        <form className="form" onSubmit={handleSubmit}>
+          <label className="form-label">
             Game Name:
             <input
-              className={styles.formInput}
+              className="form-input"
               type="text"
               value={gameName}
               onChange={(e) => setGameName(e.target.value)}
               autoFocus
             />
             {nameTaken && (
-              <span className={styles.error}>Name already taken</span>
+              <span className="form-error">Name already taken</span>
             )}
           </label>
-          <label className={styles.formLabel}>
+          <label className="form-label">
             Starting Points:
             <input
-              className={styles.formInput}
+              className="form-input"
               type="number"
               value={startingPoints}
               onChange={(e) => setStartingPoints(Number(e.target.value))}
             />
           </label>
-          <label className={styles.formLabel}>
+          <label className="form-label">
             Winning Points (optional):
             <input
-              className={styles.formInput}
+              className="form-input"
               type="number"
               value={winningPoints}
               onChange={(e) => setWinningPoints(e.target.value)}
@@ -151,16 +150,39 @@ export default function GameSettingsModal() {
             />
           </label>
           {isEditMode && playerArray.length > 0 && (
-            <div className={styles.playersSection}>
-              <h3 className={styles.sectionTitle}>Players</h3>
-              <div className={styles.playerList}>
+            <div style={{ marginTop: '1.5rem' }}>
+              <h3>Players</h3>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.5rem',
+                }}
+              >
                 {playerArray.map((player) => (
-                  <div key={player.id} className={styles.playerItem}>
+                  <div
+                    key={player.id}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      padding: '0.75rem',
+                      border: '1px solid #ddd',
+                      background: '#f9f9f9',
+                    }}
+                  >
                     {editingPlayerId === player.id ? (
                       <>
-                        <div className={styles.playerInputWrapper}>
+                        <div
+                          style={{
+                            flex: 1,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '0.25rem',
+                          }}
+                        >
                           <input
-                            className={styles.playerInput}
+                            className="form-input"
                             type="text"
                             value={editingPlayerName}
                             onChange={(e) =>
@@ -169,13 +191,13 @@ export default function GameSettingsModal() {
                             autoFocus
                           />
                           {isEditingPlayerNameTaken && (
-                            <span className={styles.error}>
+                            <span className="form-error">
                               Name already taken
                             </span>
                           )}
                         </div>
                         <button
-                          className={styles.saveButton}
+                          className="btn btn-success"
                           type="button"
                           onClick={() => handleSavePlayerName(player.id)}
                           disabled={
@@ -186,7 +208,7 @@ export default function GameSettingsModal() {
                           Save
                         </button>
                         <button
-                          className={styles.cancelEditButton}
+                          className="btn"
                           type="button"
                           onClick={() => setEditingPlayerId(null)}
                         >
@@ -195,25 +217,23 @@ export default function GameSettingsModal() {
                       </>
                     ) : (
                       <>
-                        <span className={styles.playerName}>{player.name}</span>
-                        <div className={styles.playerActions}>
-                          <button
-                            className={styles.renameButton}
-                            type="button"
-                            onClick={() =>
-                              handleEditPlayerName(player.id, player.name)
-                            }
-                          >
-                            Rename
-                          </button>
-                          <button
-                            className={styles.deletePlayerButton}
-                            type="button"
-                            onClick={() => handleDeletePlayer(player.id)}
-                          >
-                            Delete
-                          </button>
-                        </div>
+                        <span style={{ flex: 1 }}>{player.name}</span>
+                        <button
+                          className="btn btn-primary"
+                          type="button"
+                          onClick={() =>
+                            handleEditPlayerName(player.id, player.name)
+                          }
+                        >
+                          Rename
+                        </button>
+                        <button
+                          className="btn btn-danger"
+                          type="button"
+                          onClick={() => handleDeletePlayer(player.id)}
+                        >
+                          Delete
+                        </button>
                       </>
                     )}
                   </div>
@@ -221,16 +241,16 @@ export default function GameSettingsModal() {
               </div>
             </div>
           )}
-          <div className={styles.buttons}>
-            <button className={styles.submitButton} type="submit">
-              {isEditMode ? 'Save' : 'Create'}
-            </button>
+          <div className="form-buttons">
             <button
-              className={styles.cancelButton}
+              className="btn"
               type="button"
               onClick={() => closeModal('gameSettings')}
             >
               Cancel
+            </button>
+            <button className="btn btn-primary" type="submit">
+              {isEditMode ? 'Save' : 'Create'}
             </button>
           </div>
         </form>

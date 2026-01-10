@@ -94,15 +94,15 @@ export default function CalculatorModal({
   };
 
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
+    <div className="modal-overlay">
+      <div className="modal-content">
         <button
-          className={styles.closeButton}
+          className="modal-close"
           onClick={() => closeModal('calculator')}
         >
-          X
+          ×
         </button>
-        <h2 className={styles.title}>Calculator</h2>
+        <h2>Calculator</h2>
 
         <div
           className={`${styles.result} ${result === null ? styles.hidden : ''}`}
@@ -122,9 +122,10 @@ export default function CalculatorModal({
 
         {currentScore !== undefined && (
           <button
-            className={styles.currentScoreButton}
+            className="btn btn-info"
             onClick={handleAddCurrentScore}
             type="button"
+            style={{ width: '100%', marginBottom: '0.5rem' }}
           >
             Current Score ({currentScore})
           </button>
@@ -132,28 +133,28 @@ export default function CalculatorModal({
 
         <div className={styles.buttonGrid}>
           <button
-            className={styles.clearButton}
+            className="btn btn-danger"
             onClick={handleClear}
             type="button"
           >
             C
           </button>
           <button
-            className={styles.backspaceButton}
+            className="btn btn-warning"
             onClick={handleBackspace}
             type="button"
           >
             ←
           </button>
           <button
-            className={styles.operatorButton}
+            className={styles.button}
             onClick={() => handleButtonClick('(')}
             type="button"
           >
             (
           </button>
           <button
-            className={styles.operatorButton}
+            className={styles.button}
             onClick={() => handleButtonClick(')')}
             type="button"
           >
@@ -161,28 +162,28 @@ export default function CalculatorModal({
           </button>
 
           <button
-            className={styles.numberButton}
+            className={styles.button}
             onClick={() => handleButtonClick('7')}
             type="button"
           >
             7
           </button>
           <button
-            className={styles.numberButton}
+            className={styles.button}
             onClick={() => handleButtonClick('8')}
             type="button"
           >
             8
           </button>
           <button
-            className={styles.numberButton}
+            className={styles.button}
             onClick={() => handleButtonClick('9')}
             type="button"
           >
             9
           </button>
           <button
-            className={styles.operatorButton}
+            className={styles.button}
             onClick={() => handleButtonClick('/')}
             type="button"
           >
@@ -190,28 +191,28 @@ export default function CalculatorModal({
           </button>
 
           <button
-            className={styles.numberButton}
+            className={styles.button}
             onClick={() => handleButtonClick('4')}
             type="button"
           >
             4
           </button>
           <button
-            className={styles.numberButton}
+            className={styles.button}
             onClick={() => handleButtonClick('5')}
             type="button"
           >
             5
           </button>
           <button
-            className={styles.numberButton}
+            className={styles.button}
             onClick={() => handleButtonClick('6')}
             type="button"
           >
             6
           </button>
           <button
-            className={styles.operatorButton}
+            className={styles.button}
             onClick={() => handleButtonClick('*')}
             type="button"
           >
@@ -219,28 +220,28 @@ export default function CalculatorModal({
           </button>
 
           <button
-            className={styles.numberButton}
+            className={styles.button}
             onClick={() => handleButtonClick('1')}
             type="button"
           >
             1
           </button>
           <button
-            className={styles.numberButton}
+            className={styles.button}
             onClick={() => handleButtonClick('2')}
             type="button"
           >
             2
           </button>
           <button
-            className={styles.numberButton}
+            className={styles.button}
             onClick={() => handleButtonClick('3')}
             type="button"
           >
             3
           </button>
           <button
-            className={styles.operatorButton}
+            className={styles.button}
             onClick={() => handleButtonClick('-')}
             type="button"
           >
@@ -248,21 +249,21 @@ export default function CalculatorModal({
           </button>
 
           <button
-            className={`${styles.numberButton} ${styles.zeroButton}`}
+            className={`${styles.button} ${styles.span2}`}
             onClick={() => handleButtonClick('0')}
             type="button"
           >
             0
           </button>
           <button
-            className={styles.numberButton}
+            className={styles.button}
             onClick={() => handleButtonClick('.')}
             type="button"
           >
             .
           </button>
           <button
-            className={styles.operatorButton}
+            className={styles.button}
             onClick={() => handleButtonClick('+')}
             type="button"
           >
@@ -270,7 +271,7 @@ export default function CalculatorModal({
           </button>
 
           <button
-            className={styles.equalsButton}
+            className={`btn btn-success ${styles.span2}`}
             onClick={handleCalculate}
             type="button"
           >
@@ -278,7 +279,7 @@ export default function CalculatorModal({
           </button>
 
           <button
-            className={styles.applyButton}
+            className={`btn btn-primary ${styles.span2}`}
             onClick={handleApply}
             type="button"
             disabled={result === null}
