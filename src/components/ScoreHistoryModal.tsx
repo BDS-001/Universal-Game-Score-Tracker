@@ -1,6 +1,5 @@
 import { useUIContext } from '../context/UIContext';
 import { useGameContext } from '../context/GameContext';
-import styles from './ScoreHistoryModal.module.css';
 
 export default function ScoreHistoryModal() {
   const { closeModal } = useUIContext();
@@ -24,33 +23,22 @@ export default function ScoreHistoryModal() {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <button
-          className="modal-close"
-          onClick={() => closeModal('scoreHistory')}
-        >
-          ×
-        </button>
+        <button onClick={() => closeModal('scoreHistory')}>×</button>
         <h2>Score History - {player.name}</h2>
-        <div className={styles.historyList}>
+        <div>
           {history.length === 0 ? (
-            <p className={styles.noHistory}>No score history yet</p>
+            <p>No score history yet</p>
           ) : (
             history.map((entry, index) => (
-              <div key={index} className={styles.historyItem}>
-                <div className={styles.timestamp}>
-                  {formatDate(entry.timestamp)}
-                </div>
-                <div className={styles.scoreChange}>
-                  <span
-                    className={
-                      entry.change >= 0 ? styles.positive : styles.negative
-                    }
-                  >
+              <div key={index}>
+                <div>{formatDate(entry.timestamp)}</div>
+                <div>
+                  <span>
                     {entry.change >= 0 ? '+' : ''}
                     {entry.change}
                   </span>
-                  <span className={styles.arrow}>→</span>
-                  <span className={styles.newTotal}>{entry.newTotal}</span>
+                  <span> → </span>
+                  <span>{entry.newTotal}</span>
                 </div>
               </div>
             ))

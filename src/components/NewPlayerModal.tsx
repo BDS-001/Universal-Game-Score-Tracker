@@ -47,36 +47,23 @@ export default function NewPlayerModal() {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <button className="modal-close" onClick={() => closeModal('newPlayer')}>
-          ×
-        </button>
+        <button onClick={() => closeModal('newPlayer')}>×</button>
         <h2>Add New Player</h2>
-        <form className="form" onSubmit={handleSubmit}>
-          <label className="form-label">
+        <form onSubmit={handleSubmit}>
+          <label>
             Player Name:
             <input
-              className="form-input"
               type="text"
               value={playerName}
               onChange={(e) => setPlayerName(e.target.value)}
               autoFocus
             />
-            {nameTaken && (
-              <span className="form-error">Name already taken</span>
-            )}
+            {nameTaken && <span>Name already taken</span>}
           </label>
-          <div className="form-buttons">
-            <button
-              className="btn"
-              type="button"
-              onClick={() => closeModal('newPlayer')}
-            >
-              Cancel
-            </button>
-            <button className="btn btn-primary" type="submit">
-              Add Player
-            </button>
-          </div>
+          <button type="button" onClick={() => closeModal('newPlayer')}>
+            Cancel
+          </button>
+          <button type="submit">Add Player</button>
         </form>
       </div>
     </div>

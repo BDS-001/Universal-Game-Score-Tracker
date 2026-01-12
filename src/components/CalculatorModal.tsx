@@ -1,5 +1,4 @@
 import { useUIContext } from '../context/UIContext';
-import styles from './CalculatorModal.module.css';
 import { useState } from 'react';
 import Mexp from 'math-expression-evaluator';
 
@@ -96,23 +95,13 @@ export default function CalculatorModal({
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <button
-          className="modal-close"
-          onClick={() => closeModal('calculator')}
-        >
-          ×
-        </button>
+        <button onClick={() => closeModal('calculator')}>×</button>
         <h2>Calculator</h2>
 
-        <div
-          className={`${styles.result} ${result === null ? styles.hidden : ''}`}
-        >
-          = {result ?? 0}
-        </div>
+        {result !== null && <div>= {result}</div>}
 
         <input
           type="text"
-          className={styles.display}
           value={expression}
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
@@ -121,164 +110,79 @@ export default function CalculatorModal({
         />
 
         {currentScore !== undefined && (
-          <button
-            className={`btn btn-info ${styles.currentScoreBtn}`}
-            onClick={handleAddCurrentScore}
-            type="button"
-          >
+          <button onClick={handleAddCurrentScore} type="button">
             Current Score ({currentScore})
           </button>
         )}
 
-        <div className={styles.buttonGrid}>
-          <button
-            className="btn btn-danger"
-            onClick={handleClear}
-            type="button"
-          >
+        <div>
+          <button onClick={handleClear} type="button">
             C
           </button>
-          <button
-            className="btn btn-warning"
-            onClick={handleBackspace}
-            type="button"
-          >
+          <button onClick={handleBackspace} type="button">
             ←
           </button>
-          <button
-            className={styles.button}
-            onClick={() => handleButtonClick('(')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick('(')} type="button">
             (
           </button>
-          <button
-            className={styles.button}
-            onClick={() => handleButtonClick(')')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick(')')} type="button">
             )
           </button>
 
-          <button
-            className={styles.button}
-            onClick={() => handleButtonClick('7')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick('7')} type="button">
             7
           </button>
-          <button
-            className={styles.button}
-            onClick={() => handleButtonClick('8')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick('8')} type="button">
             8
           </button>
-          <button
-            className={styles.button}
-            onClick={() => handleButtonClick('9')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick('9')} type="button">
             9
           </button>
-          <button
-            className={styles.button}
-            onClick={() => handleButtonClick('/')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick('/')} type="button">
             ÷
           </button>
 
-          <button
-            className={styles.button}
-            onClick={() => handleButtonClick('4')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick('4')} type="button">
             4
           </button>
-          <button
-            className={styles.button}
-            onClick={() => handleButtonClick('5')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick('5')} type="button">
             5
           </button>
-          <button
-            className={styles.button}
-            onClick={() => handleButtonClick('6')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick('6')} type="button">
             6
           </button>
-          <button
-            className={styles.button}
-            onClick={() => handleButtonClick('*')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick('*')} type="button">
             ×
           </button>
 
-          <button
-            className={styles.button}
-            onClick={() => handleButtonClick('1')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick('1')} type="button">
             1
           </button>
-          <button
-            className={styles.button}
-            onClick={() => handleButtonClick('2')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick('2')} type="button">
             2
           </button>
-          <button
-            className={styles.button}
-            onClick={() => handleButtonClick('3')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick('3')} type="button">
             3
           </button>
-          <button
-            className={styles.button}
-            onClick={() => handleButtonClick('-')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick('-')} type="button">
             −
           </button>
 
-          <button
-            className={`${styles.button} ${styles.span2}`}
-            onClick={() => handleButtonClick('0')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick('0')} type="button">
             0
           </button>
-          <button
-            className={styles.button}
-            onClick={() => handleButtonClick('.')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick('.')} type="button">
             .
           </button>
-          <button
-            className={styles.button}
-            onClick={() => handleButtonClick('+')}
-            type="button"
-          >
+          <button onClick={() => handleButtonClick('+')} type="button">
             +
           </button>
 
-          <button
-            className={`btn btn-success ${styles.span2}`}
-            onClick={handleCalculate}
-            type="button"
-          >
+          <button onClick={handleCalculate} type="button">
             =
           </button>
 
           <button
-            className={`btn btn-primary ${styles.span2}`}
             onClick={handleApply}
             type="button"
             disabled={result === null}

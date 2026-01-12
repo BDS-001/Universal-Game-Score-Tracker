@@ -17,17 +17,15 @@ export default function ConfirmationModal() {
 
   return (
     <div className={`modal-overlay ${styles.overlay}`}>
-      <div className={`modal-content ${styles.content}`}>
+      <div className="modal-content">
         <h2>{confirmationData.title}</h2>
-        <p className={styles.message}>{confirmationData.message}</p>
-        <div className={`form-buttons ${styles.buttons}`}>
-          <button className="btn" onClick={handleCancel}>
-            {confirmationData.cancelText || 'Cancel'}
-          </button>
-          <button className="btn btn-danger" onClick={handleConfirm}>
-            {confirmationData.confirmText || 'Confirm'}
-          </button>
-        </div>
+        <p>{confirmationData.message}</p>
+        <button onClick={handleCancel}>
+          {confirmationData.cancelText || 'Cancel'}
+        </button>
+        <button onClick={handleConfirm}>
+          {confirmationData.confirmText || 'Confirm'}
+        </button>
       </div>
     </div>
   );

@@ -1,16 +1,3 @@
-.content {
-  max-width: 400px;
-}
-
-.message {
-  color: #666;
-  line-height: 1.5;
-}
-
-.buttons {
-  justify-content: flex-end;
-}
-
 .overlay {
   z-index: 2000;
 }

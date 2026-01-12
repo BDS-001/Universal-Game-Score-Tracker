@@ -1,6 +1,5 @@
 import { useGameContext } from '../context/GameContext';
 import { useUIContext } from '../context/UIContext';
-import styles from './gameSelect.module.css';
 
 export default function GameSelector() {
   const { games, setCurrentGameId, deleteGame } = useGameContext();
@@ -29,32 +28,17 @@ export default function GameSelector() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.title}>Games</div>
-      <button
-        className={styles.createButton}
-        onClick={() => openModal('gameSettings')}
-      >
-        Create New Game
-      </button>
-      <div className={styles.gameList}>
-        {Object.entries(games).map(([key, game]) => (
-          <div key={key} className={styles.gameItem}>
-            <button
-              className={styles.gameButton}
-              onClick={() => handleGameClick(key)}
-            >
-              {game.gameName}
-            </button>
-            <button
-              className={styles.deleteButton}
-              onClick={(e) => handleDeleteGame(e, key, game.gameName)}
-            >
-              Delete
-            </button>
-          </div>
-        ))}
-      </div>
+    <div>
+      <h1>Games</h1>
+      <button onClick={() => openModal('gameSettings')}>Create New Game</button>
+      {Object.entries(games).map(([key, game]) => (
+        <div key={key}>
+          <button onClick={() => handleGameClick(key)}>{game.gameName}</button>
+          <button onClick={(e) => handleDeleteGame(e, key, game.gameName)}>
+            Delete
+          </button>
+        </div>
+      ))}
     </div>
   );
 }

@@ -81,71 +81,52 @@ export default function PlayerScore() {
   };
 
   return (
-    <div className="page-container">
-      <div>
-        <button className="btn" onClick={returnToScorePage}>
-          Back to Scores
-        </button>
-        <h1>{gameName}</h1>
-        <h2>{player.name}</h2>
-        <button className="btn" onClick={() => openModal('scoreHistory')}>
-          View History
-        </button>
-      </div>
+    <div>
+      <button onClick={returnToScorePage}>Back to Scores</button>
+      <h1>{gameName}</h1>
+      <h2>{player.name}</h2>
+      <button onClick={() => openModal('scoreHistory')}>View History</button>
 
       <div>
-        <div>
-          <span>Current Score:</span>
-          <span>{player.score}</span>
-        </div>
-
-        <div>
-          <input
-            type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            value={inputValue}
-            onChange={handleScoreChange}
-            onFocus={(e) => e.target.select()}
-          />
-          <button className="btn btn-danger" onClick={handleDecrement}>
-            -
-          </button>
-          <button className="btn btn-success" onClick={handleIncrement}>
-            +
-          </button>
-        </div>
-
-        <button
-          className="btn btn-info"
-          onClick={() => openCalculator(handleCalculatorResult, player.score)}
-        >
-          Calculator
-        </button>
-
-        <div>
-          <span>Difference:</span>
-          <span>
-            {difference >= 0 ? '+' : ''}
-            {difference}
-          </span>
-        </div>
-
-        {pointsAway !== null && (
-          <div>
-            <span>Points to Win:</span>
-            <span>{pointsAway > 0 ? pointsAway : 'Winner!'}</span>
-          </div>
-        )}
-
-        <button
-          className="btn btn-primary"
-          onClick={handleApply}
-          disabled={difference === 0}
-        >
-          Apply
-        </button>
+        <span>Current Score: </span>
+        <span>{player.score}</span>
       </div>
+
+      <input
+        type="text"
+        inputMode="numeric"
+        pattern="[0-9]*"
+        value={inputValue}
+        onChange={handleScoreChange}
+        onFocus={(e) => e.target.select()}
+      />
+      <button onClick={handleDecrement}>-</button>
+      <button onClick={handleIncrement}>+</button>
+
+      <button
+        onClick={() => openCalculator(handleCalculatorResult, player.score)}
+      >
+        Calculator
+      </button>
+
+      <div>
+        <span>Difference: </span>
+        <span>
+          {difference >= 0 ? '+' : ''}
+          {difference}
+        </span>
+      </div>
+
+      {pointsAway !== null && (
+        <div>
+          <span>Points to Win: </span>
+          <span>{pointsAway > 0 ? pointsAway : 'Winner!'}</span>
+        </div>
+      )}
+
+      <button onClick={handleApply} disabled={difference === 0}>
+        Apply
+      </button>
     </div>
   );
 }
