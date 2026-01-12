@@ -13,16 +13,17 @@ export default function NewPlayerModal() {
   const currentGame = games[currentGameId];
   if (!currentGame) return null;
 
+  const trimmedName = playerName.trim();
   const nameTaken =
-    playerName.trim() && isPlayerNameTaken(playerName.trim(), currentGameId);
+    trimmedName && isPlayerNameTaken(trimmedName, currentGameId);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!playerName.trim() || nameTaken) return;
+    if (!trimmedName || nameTaken) return;
 
     const newPlayer: Player = {
       id: crypto.randomUUID(),
-      name: playerName.trim(),
+      name: trimmedName,
       score: currentGame.settings.startingPoints,
       scoreHistory: [
         {
@@ -33,12 +34,10 @@ export default function NewPlayerModal() {
       ],
     };
 
-    const updatedGame = {
+    addGame({
       ...currentGame,
       players: { ...currentGame.players, [newPlayer.id]: newPlayer },
-    };
-
-    addGame(updatedGame);
+    });
 
     closeModal('newPlayer');
     setPlayerName('');
