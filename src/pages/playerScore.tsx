@@ -100,9 +100,6 @@ export default function PlayerScore() {
         </div>
 
         <div>
-          <button className="btn btn-danger" onClick={handleDecrement}>
-            -
-          </button>
           <input
             type="text"
             inputMode="numeric"
@@ -111,6 +108,9 @@ export default function PlayerScore() {
             onChange={handleScoreChange}
             onFocus={(e) => e.target.select()}
           />
+          <button className="btn btn-danger" onClick={handleDecrement}>
+            -
+          </button>
           <button className="btn btn-success" onClick={handleIncrement}>
             +
           </button>
