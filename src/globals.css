@@ -1,3 +1,39 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --color-1: #f2f0e5;
+  --color-2: #b8b5b9;
+  --color-3: #868188;
+  --color-4: #646365;
+  --color-5: #45444f;
+  --color-6: #3a3858;
+  --color-7: #212123;
+  --color-8: #352b42;
+  --color-9: #43436a;
+  --color-10: #4b80ca;
+  --color-11: #68c2d3;
+  --color-12: #a2dcc7;
+  --color-13: #ede19e;
+  --color-14: #d3a068;
+  --color-15: #b45252;
+  --color-16: #6a536e;
+  --color-17: #4b4158;
+  --color-18: #80493a;
+  --color-19: #a77b5b;
+  --color-20: #e5ceb4;
+  --color-21: #c2d368;
+  --color-22: #8ab060;
+  --color-23: #567b79;
+  --color-24: #4e584a;
+  --color-25: #7b7243;
+  --color-26: #b2b47e;
+  --color-27: #edc8c4;
+  --color-28: #cf8acb;
+  --color-29: #5f556a;
+}
+
 /* Modal overlay - required for modal functionality */
 .modal-overlay {
   position: fixed;
