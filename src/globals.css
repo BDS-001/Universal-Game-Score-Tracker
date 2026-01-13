@@ -2,6 +2,15 @@
   box-sizing: border-box;
 }
 
+body {
+  background-color: var(--color-7);
+  color: var(--color-1);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 :root {
   --color-1: #f2f0e5;
   --color-2: #b8b5b9;
