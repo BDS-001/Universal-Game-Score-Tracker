@@ -1,1 +1,62 @@
-/* No styles */
+.container {
+  max-width: 600px;
+  width: 100%;
+  padding: 20px;
+}
+
+.title {
+  font-size: 48px;
+  text-align: center;
+  margin: 0 0 32px 0;
+  color: var(--color-13);
+  text-shadow: 4px 4px 0 var(--color-9);
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+}
+
+.createButton {
+  width: 100%;
+  margin-bottom: 24px;
+  background-color: var(--color-22);
+  border-color: var(--color-21);
+}
+
+.createButton:hover {
+  background-color: var(--color-21);
+}
+
+.gameList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gameCard {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background-color: var(--color-8);
+  border: 3px solid var(--color-16);
+}
+
+.gameButton {
+  flex: 1;
+  text-align: left;
+  background-color: var(--color-6);
+  border-color: var(--color-9);
+}
+
+.gameButton:hover {
+  background-color: var(--color-9);
+}
+
+.deleteButton {
+  width: 48px;
+  padding: 12px;
+  background-color: var(--color-15);
+  border-color: var(--color-18);
+}
+
+.deleteButton:hover {
+  background-color: var(--color-18);
+}

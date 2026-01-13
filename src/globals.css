@@ -9,6 +9,32 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0;
+  font-family: 'Courier New', monospace;
+}
+
+button {
+  background-color: var(--color-9);
+  color: var(--color-1);
+  border: 3px solid var(--color-10);
+  padding: 12px 24px;
+  font-family: 'Courier New', monospace;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  box-shadow: 4px 4px 0 var(--color-7);
+}
+
+button:hover {
+  background-color: var(--color-10);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--color-7);
+}
+
+button:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--color-7);
 }
 
 :root {
