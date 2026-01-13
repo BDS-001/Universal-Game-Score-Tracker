@@ -114,7 +114,11 @@ export default function CalculatorModal({
             placeholder="0"
             autoFocus
           />
-          {result !== null && <div className={styles.result}>= {result}</div>}
+          <div
+            className={`${styles.result} ${result === null ? styles.hidden : ''}`}
+          >
+            = {result ?? 0}
+          </div>
         </div>
 
         {currentScore !== undefined && (

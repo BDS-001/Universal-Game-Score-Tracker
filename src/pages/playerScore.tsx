@@ -1,6 +1,7 @@
 import { useGameContext } from '../context/GameContext';
 import { useUIContext } from '../context/UIContext';
 import { useState } from 'react';
+import styles from './playerScore.module.css';
 
 export default function PlayerScore() {
   const {
@@ -50,59 +51,104 @@ export default function PlayerScore() {
   };
 
   return (
-    <div>
-      <button
-        onClick={() => {
-          setCurrentPlayerId(null);
-          setCurrentScene('gamePage');
-        }}
-      >
-        Back to Scores
-      </button>
-      <h1>{game.gameName}</h1>
-      <h2>{player.name}</h2>
-      <button onClick={() => openModal('scoreHistory')}>View History</button>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <button
+          className={styles.backButton}
+          onClick={() => {
+            setCurrentPlayerId(null);
+            setCurrentScene('gamePage');
+          }}
+        >
+          ← Back
+        </button>
+        <div className={styles.headerInfo}>
+          <h1 className={styles.gameName}>{game.gameName}</h1>
+          <h2 className={styles.playerName}>{player.name}</h2>
+        </div>
+        <button
+          className={styles.historyButton}
+          onClick={() => openModal('scoreHistory')}
+        >
+          View History
+        </button>
+      </div>
 
-      <p>Current Score: {player.score}</p>
+      <div className={styles.scoreSection}>
+        <div className={styles.currentScore}>
+          <div className={styles.label}>Current Score</div>
+          <div className={styles.score}>{player.score}</div>
+        </div>
 
-      <input
-        type="text"
-        inputMode="numeric"
-        value={inputValue}
-        onChange={handleScoreChange}
-        onFocus={(e) => e.target.select()}
-      />
-      <button onClick={() => updateScore(newScore - 1)}>-</button>
-      <button onClick={() => updateScore(newScore + 1)}>+</button>
+        <div className={styles.scoreEditor}>
+          <div className={styles.label}>New Score</div>
+          <input
+            className={styles.scoreInput}
+            type="text"
+            inputMode="numeric"
+            value={inputValue}
+            onChange={handleScoreChange}
+            onFocus={(e) => e.target.select()}
+          />
+          <div className={styles.incrementButtons}>
+            <button
+              className={styles.decrementButton}
+              onClick={() => updateScore(newScore - 1)}
+            >
+              −1
+            </button>
+            <button
+              className={styles.incrementButton}
+              onClick={() => updateScore(newScore + 1)}
+            >
+              +1
+            </button>
+          </div>
+          <button
+            className={styles.calculatorButton}
+            onClick={() =>
+              openCalculator(
+                (result) => updateScore(Math.round(result)),
+                player.score
+              )
+            }
+          >
+            Calculator
+          </button>
+          <button
+            className={styles.applyButton}
+            onClick={() =>
+              updatePlayerScore(currentGameId, currentPlayerId, newScore)
+            }
+            disabled={difference === 0}
+          >
+            Apply Score
+          </button>
+        </div>
+      </div>
 
-      <button
-        onClick={() =>
-          openCalculator(
-            (result) => updateScore(Math.round(result)),
-            player.score
-          )
-        }
-      >
-        Calculator
-      </button>
+      <div className={styles.info}>
+        <div
+          className={`${styles.infoCard} ${difference === 0 ? styles.hidden : ''}`}
+        >
+          <span className={styles.infoLabel}>Change:</span>
+          <span className={difference >= 0 ? styles.positive : styles.negative}>
+            {difference >= 0 ? '+' : ''}
+            {difference}
+          </span>
+        </div>
 
-      <p>
-        Difference: {difference >= 0 ? '+' : ''}
-        {difference}
-      </p>
+        {pointsAway !== null && pointsAway > 0 && (
+          <div className={styles.infoCard}>
+            <span className={styles.infoLabel}>To Win:</span>
+            <span className={styles.infoValue}>{pointsAway}</span>
+          </div>
+        )}
 
-      {pointsAway !== null && (
-        <p>Points to Win: {pointsAway > 0 ? pointsAway : 'Winner!'}</p>
-      )}
-
-      <button
-        onClick={() =>
-          updatePlayerScore(currentGameId, currentPlayerId, newScore)
-        }
-        disabled={difference === 0}
-      >
-        Apply
-      </button>
+        {pointsAway !== null && pointsAway <= 0 && (
+          <div className={styles.winnerCard}>Winner!</div>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useGameContext } from '../context/GameContext';
 import { useUIContext } from '../context/UIContext';
+import styles from './gameScore.module.css';
 
 export default function GameScore() {
   const { games, currentGameId, setCurrentPlayerId, setCurrentGameId } =
@@ -14,38 +15,57 @@ export default function GameScore() {
   const playerArray = Object.values(game.players);
 
   return (
-    <div>
-      <button
-        onClick={() => {
-          setCurrentScene('gameList');
-          setCurrentGameId(null);
-          setCurrentPlayerId(null);
-        }}
-      >
-        Back to Games
-      </button>
-      <h1>{game.gameName}</h1>
-      <button onClick={() => openModal('gameSettings')}>Settings</button>
-      <button onClick={() => openModal('newPlayer')}>Add Player</button>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <button
+          className={styles.backButton}
+          onClick={() => {
+            setCurrentScene('gameList');
+            setCurrentGameId(null);
+            setCurrentPlayerId(null);
+          }}
+        >
+          ← Back
+        </button>
+        <h1 className={styles.title}>{game.gameName}</h1>
+        <div className={styles.headerActions}>
+          <button onClick={() => openModal('gameSettings')}>Settings</button>
+          <button
+            className={styles.addPlayerButton}
+            onClick={() => openModal('newPlayer')}
+          >
+            + Add Player
+          </button>
+        </div>
+      </div>
+
       {game.settings.winningPoints && (
-        <div>Winning Score: {game.settings.winningPoints}</div>
+        <div className={styles.winningScore}>
+          Win at: {game.settings.winningPoints}
+        </div>
       )}
 
-      <h2>Players</h2>
+      <h2 className={styles.playersTitle}>Players</h2>
       {playerArray.length === 0 ? (
-        <p>No players yet</p>
+        <p className={styles.emptyMessage}>
+          No players yet. Add one to get started!
+        </p>
       ) : (
-        playerArray.map((player) => (
-          <button
-            key={player.id}
-            onClick={() => {
-              setCurrentPlayerId(player.id);
-              setCurrentScene('playerScore');
-            }}
-          >
-            {player.name} - {player.score}
-          </button>
-        ))
+        <div className={styles.playersList}>
+          {playerArray.map((player) => (
+            <button
+              key={player.id}
+              className={styles.playerCard}
+              onClick={() => {
+                setCurrentPlayerId(player.id);
+                setCurrentScene('playerScore');
+              }}
+            >
+              <span className={styles.playerName}>{player.name}</span>
+              <span className={styles.playerScore}>{player.score}</span>
+            </button>
+          ))}
+        </div>
       )}
     </div>
   );

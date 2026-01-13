@@ -1,1 +1,110 @@
-/* No styles */
+.container {
+  max-width: 600px;
+  width: 100%;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.backButton {
+  align-self: flex-start;
+  background-color: var(--color-6);
+  border-color: var(--color-9);
+}
+
+.backButton:hover {
+  background-color: var(--color-9);
+}
+
+.title {
+  font-size: 48px;
+  text-align: center;
+  margin: 0;
+  color: var(--color-13);
+  text-shadow: 4px 4px 0 var(--color-9);
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+}
+
+.headerActions {
+  display: flex;
+  gap: 12px;
+}
+
+.headerActions button {
+  flex: 1;
+}
+
+.addPlayerButton {
+  background-color: var(--color-22);
+  border-color: var(--color-21);
+}
+
+.addPlayerButton:hover {
+  background-color: var(--color-21);
+}
+
+.winningScore {
+  background-color: var(--color-10);
+  color: var(--color-1);
+  border: 3px solid var(--color-11);
+  padding: 12px;
+  text-align: center;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  box-shadow: 4px 4px 0 var(--color-7);
+}
+
+.playersTitle {
+  font-size: 24px;
+  color: var(--color-11);
+  text-transform: uppercase;
+  font-family: 'Courier New', monospace;
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+.emptyMessage {
+  text-align: center;
+  color: var(--color-2);
+  font-family: 'Courier New', monospace;
+  padding: 40px 20px;
+}
+
+.playersList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.playerCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: var(--color-6);
+  border-color: var(--color-9);
+  text-align: left;
+}
+
+.playerCard:hover {
+  background-color: var(--color-9);
+}
+
+.playerName {
+  font-size: 20px;
+  flex: 1;
+}
+
+.playerScore {
+  font-size: 28px;
+  color: var(--color-11);
+  font-weight: bold;
+}
