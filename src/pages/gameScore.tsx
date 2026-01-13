@@ -28,6 +28,9 @@ export default function GameScore() {
           ← Back
         </button>
         <h1 className={styles.title}>{game.gameName}</h1>
+      </div>
+
+      <div className={styles.content}>
         <div className={styles.headerActions}>
           <button onClick={() => openModal('gameSettings')}>Settings</button>
           <button
@@ -37,36 +40,36 @@ export default function GameScore() {
             + Add Player
           </button>
         </div>
+
+        {game.settings.winningPoints && (
+          <div className={styles.winningScore}>
+            Win at: {game.settings.winningPoints}
+          </div>
+        )}
+
+        <h2 className={styles.playersTitle}>Players</h2>
+        {playerArray.length === 0 ? (
+          <p className={styles.emptyMessage}>
+            No players yet. Add one to get started!
+          </p>
+        ) : (
+          <div className={styles.playersList}>
+            {playerArray.map((player) => (
+              <button
+                key={player.id}
+                className={styles.playerCard}
+                onClick={() => {
+                  setCurrentPlayerId(player.id);
+                  setCurrentScene('playerScore');
+                }}
+              >
+                <span className={styles.playerName}>{player.name}</span>
+                <span className={styles.playerScore}>{player.score}</span>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
-
-      {game.settings.winningPoints && (
-        <div className={styles.winningScore}>
-          Win at: {game.settings.winningPoints}
-        </div>
-      )}
-
-      <h2 className={styles.playersTitle}>Players</h2>
-      {playerArray.length === 0 ? (
-        <p className={styles.emptyMessage}>
-          No players yet. Add one to get started!
-        </p>
-      ) : (
-        <div className={styles.playersList}>
-          {playerArray.map((player) => (
-            <button
-              key={player.id}
-              className={styles.playerCard}
-              onClick={() => {
-                setCurrentPlayerId(player.id);
-                setCurrentScene('playerScore');
-              }}
-            >
-              <span className={styles.playerName}>{player.name}</span>
-              <span className={styles.playerScore}>{player.score}</span>
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   );
 }

@@ -13,7 +13,7 @@ function App() {
     useUIContext();
 
   return (
-    <div>
+    <>
       {currentScene === 'gameList' && <GameSelector />}
       {currentScene === 'gamePage' && <GameScore />}
       {currentScene === 'playerScore' && <PlayerScore />}
@@ -27,7 +27,7 @@ function App() {
         />
       )}
       {modals.confirmation && <ConfirmationModal />}
-    </div>
+    </>
   );
 }
 

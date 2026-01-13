@@ -1,22 +1,21 @@
 .container {
-  max-width: 600px;
   width: 100%;
-  padding: 20px;
+  padding: 16px;
 }
 
 .title {
-  font-size: 48px;
+  font-size: 36px;
   text-align: center;
-  margin: 0 0 32px 0;
+  margin: 0 0 24px 0;
   color: var(--color-13);
-  text-shadow: 4px 4px 0 var(--color-9);
+  text-shadow: 3px 3px 0 var(--color-9);
   font-family: 'Courier New', monospace;
   text-transform: uppercase;
 }
 
 .createButton {
   width: 100%;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   background-color: var(--color-22);
   border-color: var(--color-21);
 }
@@ -28,7 +27,7 @@
 .gameList {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .gameCard {

@@ -62,17 +62,15 @@ export default function PlayerScore() {
         >
           ← Back
         </button>
-        <div className={styles.headerInfo}>
-          <h1 className={styles.gameName}>{game.gameName}</h1>
-          <h2 className={styles.playerName}>{player.name}</h2>
-        </div>
-        <button
-          className={styles.historyButton}
-          onClick={() => openModal('scoreHistory')}
-        >
-          View History
-        </button>
+        <h1 className={styles.playerName}>{player.name}</h1>
       </div>
+
+      <button
+        className={styles.historyButton}
+        onClick={() => openModal('scoreHistory')}
+      >
+        View History
+      </button>
 
       <div className={styles.scoreSection}>
         <div className={styles.currentScore}>

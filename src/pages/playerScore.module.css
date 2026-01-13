@@ -1,18 +1,19 @@
 .container {
-  max-width: 600px;
   width: 100%;
-  padding: 20px;
+  padding: 16px;
 }
 
 .header {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 24px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .backButton {
-  align-self: flex-start;
+  position: absolute;
+  left: 0;
   background-color: var(--color-6);
   border-color: var(--color-9);
 }
@@ -21,23 +22,11 @@
   background-color: var(--color-9);
 }
 
-.headerInfo {
-  text-align: center;
-}
-
-.gameName {
-  font-size: 18px;
-  margin: 0 0 8px 0;
-  color: var(--color-2);
-  font-family: 'Courier New', monospace;
-  text-transform: uppercase;
-}
-
 .playerName {
   font-size: 36px;
   margin: 0;
   color: var(--color-13);
-  text-shadow: 4px 4px 0 var(--color-9);
+  text-shadow: 3px 3px 0 var(--color-9);
   font-family: 'Courier New', monospace;
   text-transform: uppercase;
 }
@@ -45,6 +34,8 @@
 .historyButton {
   background-color: var(--color-11);
   border-color: var(--color-10);
+  width: 100%;
+  margin-bottom: 12px;
 }
 
 .historyButton:hover {
@@ -54,24 +45,24 @@
 .scoreSection {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
 .currentScore {
   background-color: var(--color-8);
   border: 3px solid var(--color-16);
-  padding: 16px;
+  padding: 12px;
   text-align: center;
 }
 
 .scoreEditor {
   background-color: var(--color-8);
   border: 3px solid var(--color-16);
-  padding: 16px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .label {
@@ -84,7 +75,7 @@
 }
 
 .score {
-  font-size: 48px;
+  font-size: 36px;
   color: var(--color-11);
   font-weight: bold;
   font-family: 'Courier New', monospace;
@@ -93,15 +84,15 @@
 .scoreInput {
   width: 100%;
   text-align: center;
-  font-size: 48px;
+  font-size: 36px;
   font-weight: bold;
-  padding: 12px;
+  padding: 10px;
 }
 
 .incrementButtons {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 8px;
 }
 
 .decrementButton {
@@ -134,19 +125,19 @@
 .info {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 10px;
+  margin-bottom: 16px;
 }
 
 .infoCard {
   background-color: var(--color-8);
   border: 3px solid var(--color-16);
-  padding: 16px;
+  padding: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-family: 'Courier New', monospace;
-  min-height: 58px;
+  min-height: 52px;
 }
 
 .hidden {
@@ -162,19 +153,19 @@
 
 .infoValue {
   color: var(--color-11);
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
 }
 
 .positive {
   color: var(--color-22);
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
 }
 
 .negative {
   color: var(--color-15);
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -182,13 +173,13 @@
   background-color: var(--color-13);
   color: var(--color-7);
   border: 3px solid var(--color-14);
-  padding: 20px;
+  padding: 16px;
   text-align: center;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: bold;
   text-transform: uppercase;
   font-family: 'Courier New', monospace;
-  box-shadow: 4px 4px 0 var(--color-7);
+  box-shadow: 3px 3px 0 var(--color-7);
 }
 
 .applyButton {
