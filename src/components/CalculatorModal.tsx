@@ -112,7 +112,6 @@ export default function CalculatorModal({
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             placeholder="0"
-            autoFocus
           />
           <div
             className={`${styles.result} ${result === null ? styles.hidden : ''}`}
