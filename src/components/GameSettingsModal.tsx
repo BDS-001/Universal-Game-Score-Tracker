@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useUIContext } from '../context/UIContext';
 import { useGameContext } from '../context/GameContext';
 import { createNewGame } from '../templates/gameTemplates';
+import styles from './GameSettingsModal.module.css';
 
 export default function GameSettingsModal() {
   const { closeModal, showConfirmation } = useUIContext();
@@ -109,9 +110,16 @@ export default function GameSettingsModal() {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <button onClick={() => closeModal('gameSettings')}>×</button>
-        <h2>{isEditMode ? 'Edit Game Settings' : 'Create New Game'}</h2>
-        <form onSubmit={handleSubmit}>
+        <button
+          className="modal-close"
+          onClick={() => closeModal('gameSettings')}
+        >
+          ×
+        </button>
+        <h2 className="modal-title">
+          {isEditMode ? 'Edit Game Settings' : 'Create New Game'}
+        </h2>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <label>
             Game Name:
             <input
@@ -120,7 +128,9 @@ export default function GameSettingsModal() {
               onChange={(e) => setGameName(e.target.value)}
               autoFocus
             />
-            {nameTaken && <span>Name already taken</span>}
+            {nameTaken && (
+              <span className="error-text">Name already taken</span>
+            )}
           </label>
           <label>
             Starting Points:
@@ -140,14 +150,14 @@ export default function GameSettingsModal() {
             />
           </label>
           {isEditMode && playerArray.length > 0 && (
-            <div>
-              <h3>Players</h3>
-              <div>
+            <div className={styles.playersSection}>
+              <h3 className={styles.playersTitle}>Players</h3>
+              <div className={styles.playersList}>
                 {playerArray.map((player) => (
-                  <div key={player.id}>
+                  <div key={player.id} className={styles.playerCard}>
                     {editingPlayerId === player.id ? (
                       <>
-                        <div>
+                        <div className={styles.playerEditContainer}>
                           <input
                             type="text"
                             value={editingPlayerName}
@@ -157,43 +167,51 @@ export default function GameSettingsModal() {
                             autoFocus
                           />
                           {isEditingPlayerNameTaken && (
-                            <span>Name already taken</span>
+                            <span className="error-text">
+                              Name already taken
+                            </span>
                           )}
                         </div>
-                        <button
-                          type="button"
-                          onClick={() => handleSavePlayerName(player.id)}
-                          disabled={
-                            !editingPlayerName.trim() ||
-                            isEditingPlayerNameTaken
-                          }
-                        >
-                          Save
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setEditingPlayerId(null)}
-                        >
-                          Cancel
-                        </button>
+                        <div className={styles.playerActions}>
+                          <button
+                            className={styles.saveButton}
+                            type="button"
+                            onClick={() => handleSavePlayerName(player.id)}
+                            disabled={
+                              !editingPlayerName.trim() ||
+                              isEditingPlayerNameTaken
+                            }
+                          >
+                            Save
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setEditingPlayerId(null)}
+                          >
+                            Cancel
+                          </button>
+                        </div>
                       </>
                     ) : (
                       <>
-                        <span>{player.name}</span>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            handleEditPlayerName(player.id, player.name)
-                          }
-                        >
-                          Rename
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleDeletePlayer(player.id)}
-                        >
-                          Delete
-                        </button>
+                        <span className={styles.playerName}>{player.name}</span>
+                        <div className={styles.playerActions}>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              handleEditPlayerName(player.id, player.name)
+                            }
+                          >
+                            Rename
+                          </button>
+                          <button
+                            className={styles.deleteButton}
+                            type="button"
+                            onClick={() => handleDeletePlayer(player.id)}
+                          >
+                            Delete
+                          </button>
+                        </div>
                       </>
                     )}
                   </div>
@@ -201,10 +219,14 @@ export default function GameSettingsModal() {
               </div>
             </div>
           )}
-          <button type="button" onClick={() => closeModal('gameSettings')}>
-            Cancel
-          </button>
-          <button type="submit">{isEditMode ? 'Save' : 'Create'}</button>
+          <div className={styles.formActions}>
+            <button type="button" onClick={() => closeModal('gameSettings')}>
+              Cancel
+            </button>
+            <button className={styles.submitButton} type="submit">
+              {isEditMode ? 'Save' : 'Create'}
+            </button>
+          </div>
         </form>
       </div>
     </div>

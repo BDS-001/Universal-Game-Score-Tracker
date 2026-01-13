@@ -1,1 +1,95 @@
-/* No styles */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.playersSection {
+  margin-top: 8px;
+  padding: 16px;
+  background-color: var(--color-6);
+  border: 3px solid var(--color-9);
+}
+
+.playersTitle {
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  color: var(--color-11);
+  text-transform: uppercase;
+  font-family: 'Courier New', monospace;
+}
+
+.playersList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.playerCard {
+  background-color: var(--color-8);
+  border: 2px solid var(--color-16);
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.playerName {
+  color: var(--color-1);
+  font-weight: bold;
+  flex: 1;
+}
+
+.playerActions {
+  display: flex;
+  gap: 8px;
+}
+
+.playerActions button {
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+.playerEditContainer {
+  flex: 1;
+  width: 100%;
+}
+
+.deleteButton {
+  background-color: var(--color-15);
+  border-color: var(--color-18);
+}
+
+.deleteButton:hover {
+  background-color: var(--color-18);
+}
+
+.saveButton {
+  background-color: var(--color-22);
+  border-color: var(--color-21);
+}
+
+.saveButton:hover {
+  background-color: var(--color-21);
+}
+
+.formActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.formActions button {
+  flex: 1;
+}
+
+.submitButton {
+  background-color: var(--color-22);
+  border-color: var(--color-21);
+}
+
+.submitButton:hover {
+  background-color: var(--color-21);
+}

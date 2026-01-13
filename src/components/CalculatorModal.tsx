@@ -1,6 +1,7 @@
 import { useUIContext } from '../context/UIContext';
 import { useState } from 'react';
 import Mexp from 'math-expression-evaluator';
+import styles from './CalculatorModal.module.css';
 
 interface CalculatorModalProps {
   onCalculate?: (result: number) => void;
@@ -94,28 +95,39 @@ export default function CalculatorModal({
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
-        <button onClick={() => closeModal('calculator')}>×</button>
-        <h2>Calculator</h2>
+      <div className={`modal-content ${styles.calculator}`}>
+        <button
+          className="modal-close"
+          onClick={() => closeModal('calculator')}
+        >
+          ×
+        </button>
+        <h2 className="modal-title">Calculator</h2>
 
-        {result !== null && <div>= {result}</div>}
-
-        <input
-          type="text"
-          value={expression}
-          onChange={handleInputChange}
-          onKeyDown={handleKeyDown}
-          placeholder="0"
-          autoFocus
-        />
+        <div className={styles.display}>
+          <input
+            className={styles.input}
+            type="text"
+            value={expression}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            placeholder="0"
+            autoFocus
+          />
+          {result !== null && <div className={styles.result}>= {result}</div>}
+        </div>
 
         {currentScore !== undefined && (
-          <button onClick={handleAddCurrentScore} type="button">
+          <button
+            className={styles.currentScoreButton}
+            onClick={handleAddCurrentScore}
+            type="button"
+          >
             Current Score ({currentScore})
           </button>
         )}
 
-        <div>
+        <div className={styles.buttonGrid}>
           <button onClick={handleClear} type="button">
             C
           </button>
@@ -138,7 +150,11 @@ export default function CalculatorModal({
           <button onClick={() => handleButtonClick('9')} type="button">
             9
           </button>
-          <button onClick={() => handleButtonClick('/')} type="button">
+          <button
+            className={styles.operator}
+            onClick={() => handleButtonClick('/')}
+            type="button"
+          >
             ÷
           </button>
 
@@ -151,7 +167,11 @@ export default function CalculatorModal({
           <button onClick={() => handleButtonClick('6')} type="button">
             6
           </button>
-          <button onClick={() => handleButtonClick('*')} type="button">
+          <button
+            className={styles.operator}
+            onClick={() => handleButtonClick('*')}
+            type="button"
+          >
             ×
           </button>
 
@@ -164,7 +184,11 @@ export default function CalculatorModal({
           <button onClick={() => handleButtonClick('3')} type="button">
             3
           </button>
-          <button onClick={() => handleButtonClick('-')} type="button">
+          <button
+            className={styles.operator}
+            onClick={() => handleButtonClick('-')}
+            type="button"
+          >
             −
           </button>
 
@@ -174,22 +198,30 @@ export default function CalculatorModal({
           <button onClick={() => handleButtonClick('.')} type="button">
             .
           </button>
-          <button onClick={() => handleButtonClick('+')} type="button">
+          <button
+            className={styles.operator}
+            onClick={() => handleButtonClick('+')}
+            type="button"
+          >
             +
           </button>
-
-          <button onClick={handleCalculate} type="button">
+          <button
+            className={styles.equals}
+            onClick={handleCalculate}
+            type="button"
+          >
             =
           </button>
-
-          <button
-            onClick={handleApply}
-            type="button"
-            disabled={result === null}
-          >
-            Apply to Score
-          </button>
         </div>
+
+        <button
+          className={styles.applyButton}
+          onClick={handleApply}
+          type="button"
+          disabled={result === null}
+        >
+          Apply to Score
+        </button>
       </div>
     </div>
   );

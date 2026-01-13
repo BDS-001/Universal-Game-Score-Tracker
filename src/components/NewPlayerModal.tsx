@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useUIContext } from '../context/UIContext';
 import { useGameContext } from '../context/GameContext';
 import { Player } from '../types/game';
+import styles from './NewPlayerModal.module.css';
 
 export default function NewPlayerModal() {
   const { closeModal } = useUIContext();
@@ -46,9 +47,11 @@ export default function NewPlayerModal() {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <button onClick={() => closeModal('newPlayer')}>×</button>
-        <h2>Add New Player</h2>
-        <form onSubmit={handleSubmit}>
+        <button className="modal-close" onClick={() => closeModal('newPlayer')}>
+          ×
+        </button>
+        <h2 className="modal-title">Add New Player</h2>
+        <form className={styles.form} onSubmit={handleSubmit}>
           <label>
             Player Name:
             <input
@@ -57,12 +60,18 @@ export default function NewPlayerModal() {
               onChange={(e) => setPlayerName(e.target.value)}
               autoFocus
             />
-            {nameTaken && <span>Name already taken</span>}
+            {nameTaken && (
+              <span className="error-text">Name already taken</span>
+            )}
           </label>
-          <button type="button" onClick={() => closeModal('newPlayer')}>
-            Cancel
-          </button>
-          <button type="submit">Add Player</button>
+          <div className={styles.actions}>
+            <button type="button" onClick={() => closeModal('newPlayer')}>
+              Cancel
+            </button>
+            <button className={styles.submitButton} type="submit">
+              Add Player
+            </button>
+          </div>
         </form>
       </div>
     </div>

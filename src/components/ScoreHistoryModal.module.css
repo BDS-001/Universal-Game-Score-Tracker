@@ -1,1 +1,51 @@
-/* No styles */
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.emptyMessage {
+  text-align: center;
+  color: var(--color-2);
+  font-family: 'Courier New', monospace;
+}
+
+.historyEntry {
+  background-color: var(--color-6);
+  border: 3px solid var(--color-9);
+  padding: 12px;
+}
+
+.timestamp {
+  font-size: 12px;
+  color: var(--color-2);
+  margin-bottom: 4px;
+  font-family: 'Courier New', monospace;
+}
+
+.scoreChange {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.positive {
+  color: var(--color-22);
+}
+
+.negative {
+  color: var(--color-15);
+}
+
+.arrow {
+  color: var(--color-2);
+}
+
+.total {
+  color: var(--color-11);
+}

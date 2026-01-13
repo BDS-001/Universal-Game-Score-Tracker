@@ -1,1 +1,80 @@
-/* No styles */
+.calculator {
+  max-width: 400px;
+}
+
+.display {
+  margin-bottom: 16px;
+}
+
+.input {
+  width: 100%;
+  font-size: 24px;
+  text-align: right;
+  margin-bottom: 8px;
+}
+
+.result {
+  color: var(--color-11);
+  font-size: 20px;
+  font-weight: bold;
+  text-align: right;
+  font-family: 'Courier New', monospace;
+}
+
+.currentScoreButton {
+  width: 100%;
+  margin-bottom: 16px;
+  background-color: var(--color-11);
+  border-color: var(--color-10);
+}
+
+.currentScoreButton:hover {
+  background-color: var(--color-10);
+}
+
+.buttonGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.buttonGrid button {
+  padding: 16px;
+  font-size: 18px;
+}
+
+.operator {
+  background-color: var(--color-10);
+  border-color: var(--color-11);
+}
+
+.operator:hover {
+  background-color: var(--color-11);
+}
+
+.equals {
+  background-color: var(--color-22);
+  border-color: var(--color-21);
+}
+
+.equals:hover {
+  background-color: var(--color-21);
+}
+
+.applyButton {
+  width: 100%;
+  background-color: var(--color-22);
+  border-color: var(--color-21);
+}
+
+.applyButton:hover {
+  background-color: var(--color-21);
+}
+
+.applyButton:disabled {
+  background-color: var(--color-4);
+  border-color: var(--color-3);
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -1,0 +1,23 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.actions button {
+  flex: 1;
+}
+
+.submitButton {
+  background-color: var(--color-22);
+  border-color: var(--color-21);
+}
+
+.submitButton:hover {
+  background-color: var(--color-21);
+}

@@ -9,19 +9,22 @@ export default function ConfirmationModal() {
   return (
     <div className={`modal-overlay ${styles.overlay}`}>
       <div className="modal-content">
-        <h2>{confirmationData.title}</h2>
-        <p>{confirmationData.message}</p>
-        <button onClick={() => closeModal('confirmation')}>
-          {confirmationData.cancelText || 'Cancel'}
-        </button>
-        <button
-          onClick={() => {
-            confirmationData.onConfirm();
-            closeModal('confirmation');
-          }}
-        >
-          {confirmationData.confirmText || 'Confirm'}
-        </button>
+        <h2 className="modal-title">{confirmationData.title}</h2>
+        <p className={styles.message}>{confirmationData.message}</p>
+        <div className={styles.actions}>
+          <button onClick={() => closeModal('confirmation')}>
+            {confirmationData.cancelText || 'Cancel'}
+          </button>
+          <button
+            className={styles.confirmButton}
+            onClick={() => {
+              confirmationData.onConfirm();
+              closeModal('confirmation');
+            }}
+          >
+            {confirmationData.confirmText || 'Confirm'}
+          </button>
+        </div>
       </div>
     </div>
   );

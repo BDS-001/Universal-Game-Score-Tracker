@@ -1,3 +1,29 @@
 .overlay {
   z-index: 2000;
 }
+
+.message {
+  margin: 0 0 24px 0;
+  color: var(--color-1);
+  font-family: 'Courier New', monospace;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.actions button {
+  flex: 1;
+}
+
+.confirmButton {
+  background-color: var(--color-15);
+  border-color: var(--color-18);
+}
+
+.confirmButton:hover {
+  background-color: var(--color-18);
+}
