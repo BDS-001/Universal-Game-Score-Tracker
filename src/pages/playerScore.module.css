@@ -54,6 +54,7 @@
   border: 3px solid var(--color-16);
   padding: 12px;
   text-align: center;
+  overflow: hidden;
 }
 
 .scoreEditor {
@@ -79,12 +80,12 @@
   color: var(--color-11);
   font-weight: bold;
   font-family: 'Courier New', monospace;
-  animation: pop 0.15s steps(2);
 }
 
 .inputWrapper {
   position: relative;
   width: 100%;
+  overflow: hidden;
 }
 
 .scoreInput {
@@ -111,6 +112,9 @@
   font-family: 'Courier New', monospace;
   color: var(--color-1);
   pointer-events: none;
+}
+
+.animated {
   animation: pop 0.15s steps(2);
 }
 

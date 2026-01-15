@@ -23,6 +23,8 @@ export default function PlayerScore() {
 
   const [newScore, setNewScore] = useState(player.score);
   const [inputValue, setInputValue] = useState(player.score.toString());
+  const [scoreAnimKey, setScoreAnimKey] = useState(0);
+  const [inputAnimKey, setInputAnimKey] = useState(0);
   const difference = newScore - player.score;
   const pointsAway = game.settings.winningPoints
     ? game.settings.winningPoints - player.score
@@ -31,6 +33,7 @@ export default function PlayerScore() {
   const updateScore = (val: number) => {
     setNewScore(val);
     setInputValue(val.toString());
+    setInputAnimKey((key) => key + 1);
   };
 
   const handleScoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +42,7 @@ export default function PlayerScore() {
     if (value === '' || value === '-') {
       setInputValue(value);
       setNewScore(0);
+      setInputAnimKey((key) => key + 1);
       return;
     }
 
@@ -47,6 +51,7 @@ export default function PlayerScore() {
     if (!isNaN(parsed)) {
       setInputValue(cleaned);
       setNewScore(parsed);
+      setInputAnimKey((key) => key + 1);
     }
   };
 
@@ -75,7 +80,10 @@ export default function PlayerScore() {
       <div className={styles.scoreSection}>
         <div className={styles.currentScore}>
           <div className={styles.label}>Current Score</div>
-          <div key={player.score} className={styles.score}>
+          <div
+            key={scoreAnimKey}
+            className={`${styles.score} ${scoreAnimKey > 0 ? styles.animated : ''}`}
+          >
             {player.score}
           </div>
         </div>
@@ -91,7 +99,10 @@ export default function PlayerScore() {
               onChange={handleScoreChange}
               onFocus={(e) => e.target.select()}
             />
-            <span key={inputValue} className={styles.scoreOverlay}>
+            <span
+              key={inputAnimKey}
+              className={`${styles.scoreOverlay} ${inputAnimKey > 0 ? styles.animated : ''}`}
+            >
               {inputValue}
             </span>
           </div>
@@ -122,9 +133,10 @@ export default function PlayerScore() {
           </button>
           <button
             className={styles.applyButton}
-            onClick={() =>
-              updatePlayerScore(currentGameId, currentPlayerId, newScore)
-            }
+            onClick={() => {
+              updatePlayerScore(currentGameId, currentPlayerId, newScore);
+              setScoreAnimKey((k) => k + 1);
+            }}
             disabled={difference === 0}
           >
             Apply Score
