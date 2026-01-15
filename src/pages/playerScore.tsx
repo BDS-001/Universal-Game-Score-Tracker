@@ -75,19 +75,26 @@ export default function PlayerScore() {
       <div className={styles.scoreSection}>
         <div className={styles.currentScore}>
           <div className={styles.label}>Current Score</div>
-          <div className={styles.score}>{player.score}</div>
+          <div key={player.score} className={styles.score}>
+            {player.score}
+          </div>
         </div>
 
         <div className={styles.scoreEditor}>
           <div className={styles.label}>New Score</div>
-          <input
-            className={styles.scoreInput}
-            type="text"
-            inputMode="numeric"
-            value={inputValue}
-            onChange={handleScoreChange}
-            onFocus={(e) => e.target.select()}
-          />
+          <div className={styles.inputWrapper}>
+            <input
+              className={styles.scoreInput}
+              type="text"
+              inputMode="numeric"
+              value={inputValue}
+              onChange={handleScoreChange}
+              onFocus={(e) => e.target.select()}
+            />
+            <span key={inputValue} className={styles.scoreOverlay}>
+              {inputValue}
+            </span>
+          </div>
           <div className={styles.incrementButtons}>
             <button
               className={styles.decrementButton}
