@@ -202,18 +202,18 @@ export default function CalculatorModal({
             .
           </button>
           <button
-            className={styles.operator}
-            onClick={() => handleButtonClick('+')}
-            type="button"
-          >
-            +
-          </button>
-          <button
             className={styles.equals}
             onClick={handleCalculate}
             type="button"
           >
             =
+          </button>
+          <button
+            className={styles.operator}
+            onClick={() => handleButtonClick('+')}
+            type="button"
+          >
+            +
           </button>
         </div>
 
