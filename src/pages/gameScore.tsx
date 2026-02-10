@@ -13,6 +13,7 @@ export default function GameScore() {
 
   const game = games[currentGameId];
   const playerArray = Object.values(game.players);
+  const winningPoints = game.settings.winningPoints;
 
   return (
     <div className={styles.container}>
@@ -57,13 +58,18 @@ export default function GameScore() {
             {playerArray.map((player) => (
               <button
                 key={player.id}
-                className={styles.playerCard}
+                className={`${styles.playerCard}${winningPoints && player.score >= winningPoints ? ` ${styles.winner}` : ''}`}
                 onClick={() => {
                   setCurrentPlayerId(player.id);
                   setCurrentScene('playerScore');
                 }}
               >
-                <span className={styles.playerName}>{player.name}</span>
+                <span className={styles.playerName}>
+                  {player.name}
+                  {winningPoints &&
+                    player.score >= winningPoints &&
+                    ' - Winner!'}
+                </span>
                 <span className={styles.playerScore}>{player.score}</span>
               </button>
             ))}

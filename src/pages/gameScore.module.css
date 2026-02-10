@@ -99,6 +99,20 @@
   background-color: var(--color-9);
 }
 
+.playerCard.winner:hover {
+  background-color: var(--color-14);
+}
+
+.playerCard.winner {
+  background-color: var(--color-13);
+  border-color: var(--color-14);
+  color: var(--color-7);
+}
+
+.playerCard.winner .playerScore {
+  color: var(--color-7);
+}
+
 .playerName {
   font-size: 18px;
   flex: 1;
