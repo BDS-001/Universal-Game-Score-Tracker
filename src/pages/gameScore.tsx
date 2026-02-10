@@ -17,19 +17,17 @@ export default function GameScore() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <button
-          className={styles.backButton}
-          onClick={() => {
-            setCurrentScene('gameList');
-            setCurrentGameId(null);
-            setCurrentPlayerId(null);
-          }}
-        >
-          ← Back
-        </button>
-        <h1 className={styles.title}>{game.gameName}</h1>
-      </div>
+      <button
+        className={styles.backButton}
+        onClick={() => {
+          setCurrentScene('gameList');
+          setCurrentGameId(null);
+          setCurrentPlayerId(null);
+        }}
+      >
+        ← Back
+      </button>
+      <h1 className={styles.title}>{game.gameName}</h1>
 
       <div className={styles.content}>
         <div className={styles.headerActions}>
