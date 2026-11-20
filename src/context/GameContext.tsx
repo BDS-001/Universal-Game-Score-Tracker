@@ -1,4 +1,11 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+  ReactNode,
+} from 'react';
 import { GameSave } from '../types/game';
 import { StorageManager } from '../utils/storage';
 
@@ -39,153 +46,180 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [currentGameId, setCurrentGameId] = useState<string | null>(null);
   const [currentPlayerId, setCurrentPlayerId] = useState<string | null>(null);
 
-  const updateGame = (
-    gameId: string,
-    updater: (game: GameSave) => GameSave
-  ) => {
-    const game = games[gameId];
-    if (!game) return;
+  const updateGame = useCallback(
+    (gameId: string, updater: (game: GameSave) => GameSave) => {
+      const game = games[gameId];
+      if (!game) return;
 
-    const updatedGames = { ...games, [gameId]: updater(game) };
-    setGames(updatedGames);
-    StorageManager.saveData(updatedGames);
-  };
-
-  const addGame = (game: GameSave) => {
-    const updatedGames = { ...games, [game.id]: game };
-    setGames(updatedGames);
-    StorageManager.saveData(updatedGames);
-  };
-
-  const isGameNameTaken = (name: string) => {
-    return Object.values(games).some(
-      (game) => game.gameName.toLowerCase() === name.toLowerCase()
-    );
-  };
-
-  const isPlayerNameTaken = (name: string, gameId: string) => {
-    const game = games[gameId];
-    if (!game) return false;
-    return Object.values(game.players).some(
-      (player) => player.name.toLowerCase() === name.toLowerCase()
-    );
-  };
-
-  const updateGameSettings = (
-    gameId: string,
-    settings: {
-      gameName?: string;
-      startingPoints: number;
-      winningPoints: number | null;
-    }
-  ) => {
-    const { gameName, startingPoints, winningPoints } = settings;
-
-    updateGame(gameId, (game) => ({
-      ...game,
-      ...(gameName && { gameName }),
-      settings: {
-        ...game.settings,
-        startingPoints,
-        winningPoints,
-      },
-    }));
-  };
-
-  const updatePlayerScore = (
-    gameId: string,
-    playerId: string,
-    newScore: number
-  ) => {
-    updateGame(gameId, (game) => {
-      const player = game.players[playerId];
-      if (!player) return game;
-
-      const change = newScore - player.score;
-      return {
-        ...game,
-        players: {
-          ...game.players,
-          [playerId]: {
-            ...player,
-            score: newScore,
-            scoreHistory: [
-              ...player.scoreHistory,
-              {
-                change,
-                timestamp: new Date().toISOString(),
-                newTotal: newScore,
-              },
-            ],
-          },
-        },
-      };
-    });
-  };
-
-  const updatePlayerName = (
-    gameId: string,
-    playerId: string,
-    newName: string
-  ) => {
-    updateGame(gameId, (game) => {
-      const player = game.players[playerId];
-      if (!player) return game;
-
-      return {
-        ...game,
-        players: {
-          ...game.players,
-          [playerId]: {
-            ...player,
-            name: newName,
-          },
-        },
-      };
-    });
-  };
-
-  const deletePlayer = (gameId: string, playerId: string) => {
-    updateGame(gameId, (game) => {
-      const { [playerId]: _, ...remainingPlayers } = game.players;
-      return {
-        ...game,
-        players: remainingPlayers,
-      };
-    });
-  };
-
-  const deleteGame = (gameId: string) => {
-    const { [gameId]: _, ...remainingGames } = games;
-    setGames(remainingGames);
-    StorageManager.saveData(remainingGames);
-
-    if (currentGameId === gameId) {
-      setCurrentGameId(null);
-    }
-  };
-
-  return (
-    <GameContext.Provider
-      value={{
-        games,
-        currentGameId,
-        setCurrentGameId,
-        currentPlayerId,
-        setCurrentPlayerId,
-        addGame,
-        updateGameSettings,
-        updatePlayerScore,
-        updatePlayerName,
-        deletePlayer,
-        deleteGame,
-        isGameNameTaken,
-        isPlayerNameTaken,
-      }}
-    >
-      {children}
-    </GameContext.Provider>
+      const updatedGames = { ...games, [gameId]: updater(game) };
+      setGames(updatedGames);
+      StorageManager.saveData(updatedGames);
+    },
+    [games]
   );
+
+  const addGame = useCallback(
+    (game: GameSave) => {
+      const updatedGames = { ...games, [game.id]: game };
+      setGames(updatedGames);
+      StorageManager.saveData(updatedGames);
+    },
+    [games]
+  );
+
+  const isGameNameTaken = useCallback(
+    (name: string) => {
+      return Object.values(games).some(
+        (game) => game.gameName.toLowerCase() === name.toLowerCase()
+      );
+    },
+    [games]
+  );
+
+  const isPlayerNameTaken = useCallback(
+    (name: string, gameId: string) => {
+      const game = games[gameId];
+      if (!game) return false;
+      return Object.values(game.players).some(
+        (player) => player.name.toLowerCase() === name.toLowerCase()
+      );
+    },
+    [games]
+  );
+
+  const updateGameSettings = useCallback(
+    (
+      gameId: string,
+      settings: {
+        gameName?: string;
+        startingPoints: number;
+        winningPoints: number | null;
+      }
+    ) => {
+      const { gameName, startingPoints, winningPoints } = settings;
+
+      updateGame(gameId, (game) => ({
+        ...game,
+        ...(gameName && { gameName }),
+        settings: {
+          ...game.settings,
+          startingPoints,
+          winningPoints,
+        },
+      }));
+    },
+    [updateGame]
+  );
+
+  const updatePlayerScore = useCallback(
+    (gameId: string, playerId: string, newScore: number) => {
+      updateGame(gameId, (game) => {
+        const player = game.players[playerId];
+        if (!player) return game;
+
+        const change = newScore - player.score;
+        return {
+          ...game,
+          players: {
+            ...game.players,
+            [playerId]: {
+              ...player,
+              score: newScore,
+              scoreHistory: [
+                ...player.scoreHistory,
+                {
+                  change,
+                  timestamp: new Date().toISOString(),
+                  newTotal: newScore,
+                },
+              ],
+            },
+          },
+        };
+      });
+    },
+    [updateGame]
+  );
+
+  const updatePlayerName = useCallback(
+    (gameId: string, playerId: string, newName: string) => {
+      updateGame(gameId, (game) => {
+        const player = game.players[playerId];
+        if (!player) return game;
+
+        return {
+          ...game,
+          players: {
+            ...game.players,
+            [playerId]: {
+              ...player,
+              name: newName,
+            },
+          },
+        };
+      });
+    },
+    [updateGame]
+  );
+
+  const deletePlayer = useCallback(
+    (gameId: string, playerId: string) => {
+      updateGame(gameId, (game) => {
+        const { [playerId]: _, ...remainingPlayers } = game.players;
+        return {
+          ...game,
+          players: remainingPlayers,
+        };
+      });
+    },
+    [updateGame]
+  );
+
+  const deleteGame = useCallback(
+    (gameId: string) => {
+      const { [gameId]: _, ...remainingGames } = games;
+      setGames(remainingGames);
+      StorageManager.saveData(remainingGames);
+
+      if (currentGameId === gameId) {
+        setCurrentGameId(null);
+      }
+    },
+    [games, currentGameId]
+  );
+
+  const value = useMemo(
+    () => ({
+      games,
+      currentGameId,
+      setCurrentGameId,
+      currentPlayerId,
+      setCurrentPlayerId,
+      addGame,
+      updateGameSettings,
+      updatePlayerScore,
+      updatePlayerName,
+      deletePlayer,
+      deleteGame,
+      isGameNameTaken,
+      isPlayerNameTaken,
+    }),
+    [
+      games,
+      currentGameId,
+      currentPlayerId,
+      addGame,
+      updateGameSettings,
+      updatePlayerScore,
+      updatePlayerName,
+      deletePlayer,
+      deleteGame,
+      isGameNameTaken,
+      isPlayerNameTaken,
+    ]
+  );
+
+  return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
 };
 
 export const useGameContext = () => {

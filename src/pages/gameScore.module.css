@@ -1,6 +1,9 @@
 .container {
   width: 100%;
   padding: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
 }
 
 .backButton {
@@ -76,6 +79,9 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  flex: 1;
+  overflow: scroll;
+  background-color: red;
 }
 
 .playerCard {

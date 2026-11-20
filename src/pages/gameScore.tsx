@@ -29,7 +29,6 @@ export default function GameScore() {
       </button>
       <h1 className={styles.title}>{game.gameName}</h1>
 
-      <div className={styles.content}>
         <div className={styles.headerActions}>
           <button onClick={() => openModal('gameSettings')}>Settings</button>
           <button
@@ -73,7 +72,6 @@ export default function GameScore() {
             ))}
           </div>
         )}
-      </div>
     </div>
   );
 }
