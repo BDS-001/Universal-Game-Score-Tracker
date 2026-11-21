@@ -100,6 +100,7 @@ button:active {
   height: 80%;
   overflow: scroll;
   box-shadow: 8px 8px 0 var(--color-7);
+  position: relative;
 }
 
 .modal-title {
@@ -112,17 +113,18 @@ button:active {
 }
 
 .modal-close {
-  align-self: flex-end;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   padding: 0;
-  font-size: 24px;
+  font-size: 20px;
   background-color: var(--color-15);
   border-color: var(--color-18);
-}
-
-.modal-close:hover {
-  background-color: var(--color-18);
+  position: sticky;
+  top: -24px;
+  margin: -24px -24px 0 0;
+  align-self: flex-end;
+  flex-shrink: 0;
+  z-index: 1;
 }
 
 input {
